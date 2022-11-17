@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Service.Interface;
 using System;
@@ -42,8 +43,11 @@ namespace Service
         //for Registration
         public string Register(Registration registration)
         {
-            Encrypt encrypt = new Encrypt();
+            Encrypt encrypt = new Encrypt(); 
             string encryptedPassword = encrypt.EncodePasswordToBase64(registration.Password);
+            registration.CreatedDate=DateTime.Now;
+            registration.UpdatedDate = null;
+            registration.Active=true;
             string passwordconfirm = encrypt.EncodePasswordToBase64(registration.confirmationPassword);
             registration.Password = encryptedPassword;
             registration.confirmationPassword = passwordconfirm;
@@ -89,11 +93,14 @@ namespace Service
             else
             {
                 Encrypt encrypt = new Encrypt();
+                TbUser tbUser = new TbUser();
                 string encrptnewpassword = encrypt.EncodePasswordToBase64(login.Password);
-                string encrptconfirmpassword = encrypt.EncodePasswordToBase64(login.confirmPassword);
+                string encrptconfirmpassword = encrypt.EncodePasswordToBase64(login.confirmPassword);              
                 if (encrptnewpassword == encrptconfirmpassword)
                 {
                     userWithSameEmail.Password = encrptconfirmpassword;
+                    userWithSameEmail.UpdatedDate = DateTime.Now;
+                    contractorFindingContext.Entry(userWithSameEmail).State = EntityState.Modified;
                     contractorFindingContext.SaveChanges();
                     return "password change successful";
                 }
