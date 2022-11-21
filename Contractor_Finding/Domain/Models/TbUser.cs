@@ -9,7 +9,7 @@ public partial class TbUser
 
     public int? TypeUser { get; set; }
 
-    public string? FirstName { get; set; }
+    public string FirstName { get; set; } = null!;
 
     public string? LastName { get; set; }
 
@@ -24,6 +24,8 @@ public partial class TbUser
     public DateTime? UpdatedDate { get; set; }
 
     public bool? Active { get; set; }
+
+    public virtual ICollection<ContractorDetail> ContractorDetails { get; } = new List<ContractorDetail>();
 
     public virtual UserType? TypeUserNavigation { get; set; }
 }
