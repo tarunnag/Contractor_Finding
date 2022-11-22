@@ -28,13 +28,13 @@ public partial class ContractorFindingContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=65.0.181.176;Database=Contractor_Finding;User Id=admin; Password=Asdf1234*;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server=65.0.181.176;Database=Contractor_Finding;User Id=admin; Password=Asdf1234*;TrustServerCertificate=True; Timeout=300;command timeout=300");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ContractorDetail>(entity =>
         {
-            entity.HasKey(e => e.License).HasName("PK__Contract__A4E54DE586135F34");
+            entity.HasKey(e => e.License).HasName("PK__Contract__A4E54DE5171ACA52");
 
             entity.ToTable("Contractor_details");
 
@@ -45,31 +45,32 @@ public partial class ContractorFindingContext : DbContext
             entity.Property(e => e.CompanyName)
                 .HasMaxLength(30)
                 .IsUnicode(false);
+            entity.Property(e => e.PhoneNumber).HasColumnName("phoneNumber");
 
             entity.HasOne(d => d.Contractor).WithMany(p => p.ContractorDetails)
                 .HasForeignKey(d => d.ContractorId)
-                .HasConstraintName("FK__Contracto__Contr__70A8B9AE");
+                .HasConstraintName("FK__Contracto__Contr__00DF2177");
 
             entity.HasOne(d => d.GenderNavigation).WithMany(p => p.ContractorDetails)
                 .HasForeignKey(d => d.Gender)
-                .HasConstraintName("FK__Contracto__Gende__719CDDE7");
+                .HasConstraintName("FK__Contracto__Gende__01D345B0");
 
             entity.HasOne(d => d.ServicesNavigation).WithMany(p => p.ContractorDetails)
                 .HasForeignKey(d => d.Services)
-                .HasConstraintName("FK__Contracto__Servi__72910220");
+                .HasConstraintName("FK__Contracto__Servi__02C769E9");
         });
 
         modelBuilder.Entity<ServiceProviding>(entity =>
         {
-            entity.HasKey(e => e.ServiceId).HasName("PK__Service___C51BB00A59D56468");
+            entity.HasKey(e => e.ServiceId).HasName("PK__Service___C51BB00A24DEE480");
 
             entity.ToTable("Service_providing");
 
-            entity.HasIndex(e => e.ServiceName, "UQ__Service___A42B5F991771FEC6").IsUnique();
+            entity.HasIndex(e => e.ServiceName, "UQ__Service___A42B5F9967930F36").IsUnique();
 
             entity.Property(e => e.ServiceId).ValueGeneratedNever();
             entity.Property(e => e.ServiceName)
-                .HasMaxLength(30)
+                .HasMaxLength(50)
                 .IsUnicode(false);
         });
 

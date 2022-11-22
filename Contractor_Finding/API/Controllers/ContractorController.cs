@@ -12,12 +12,14 @@ namespace API.Controllers
     {
         private readonly ContractorFindingContext contractorFindingContext;
         private readonly IContractorServive contractorService;
+
         //Constructor
         public ContractorController(ContractorFindingContext contractorFindingContext, IContractorServive contractorService)
         {
             this.contractorFindingContext = contractorFindingContext;
             this.contractorService = contractorService;
         }
+
         //create
         [HttpPut]
         public JsonResult CreateContractor(ContractorDetail contractorDetail)
@@ -45,17 +47,34 @@ namespace API.Controllers
                 return new JsonResult(ex.Message);
             }
         }
-        //[HttpPost("emailid")]
-        //public JsonResult UpdateContractor(ContractorDetail contractorDetail)
-        //{
-        //    try
-        //    {
-        //        return new JsonResult(contractorService.updateContractor(contractorDetail));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new JsonResult(ex.Message);
-        //    }
-        //}
+
+        //UPDATE
+        [HttpPost]
+        public JsonResult UpdateContractor(ContractorDetail contractorDetail)
+        {
+            try
+            {
+                return new JsonResult(contractorService.updateContractorDetails(contractorDetail));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(ex.Message);
+            }
+        }
+
+        //DELETE
+        [HttpDelete]
+        public JsonResult DeleteContractor(ContractorDetail contractorDetail)
+        {
+            try
+            {
+                return new JsonResult(contractorService.DeleteContractor(contractorDetail));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(ex.Message);
+            }
+ 
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace Service.Interface
     {
         string CreateContractor(ContractorDetail contractorDetail);
         List<ContractorDisplay> GetContractorDetails();
-        //string updateContractor(ContractorDetail contractorDetail);
+        string updateContractorDetails(ContractorDetail contractorDetail);
+        public string DeleteContractor(ContractorDetail contractorDetail);
     }
 }

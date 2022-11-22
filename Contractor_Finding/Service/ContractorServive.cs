@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Service.Interface;
 using System;
@@ -21,6 +22,7 @@ namespace Service
         {
             this.contractorFindingContext = contractorFindingContext;
         }
+
         //CREATE Contractor Details
         public string CreateContractor(ContractorDetail contractorDetail)
         {
@@ -48,29 +50,46 @@ namespace Service
                                                        Lattitude = c.Lattitude,
                                                        Longitude = c.Longitude,
                                                        Pincode = c.Pincode,
+                                                       PhoneNumber = c.PhoneNumber,
 
                                                    }).ToList();
             return contractors;
         }
 
-        //Update
-        //public string updateContractor(ContractorDetail contractorDetail)
-        //{
-        //    //if (contractorDetail.CompanyName != null && contractorDetail.Gender != null && contractorDetail.Lattitude != null &&
-        //    //    contractorDetail.Longitude != null && contractorDetail.License != null && contractorDetail.Pincode != null &&
-        //    //    contractorDetail.Services != null)
-        //    //{
+        //UPDATE
+        public string updateContractorDetails(ContractorDetail contractorDetail)
+        {
+            using (var context = new ContractorFindingContext())
+            {
+                var contractorobj = context.ContractorDetails.Where(c => c.ContractorId == contractorDetail.ContractorId).FirstOrDefault();
+                if (contractorobj != null)
+                {
+                    //context.ContractorDetails.Remove(contractorDetail);
+                    contractorobj.CompanyName= contractorDetail.CompanyName;
+                    contractorobj.Gender= contractorDetail?.Gender;
+                    contractorobj.Services= contractorDetail?.Services;
+                    contractorobj.PhoneNumber = contractorDetail?.PhoneNumber;
+                    contractorobj.Lattitude= contractorDetail?.Lattitude;
+                    contractorobj.Longitude = contractorDetail?.Longitude;
+                    contractorobj.Pincode = contractorDetail.Pincode;
+                    context.SaveChanges();
+                    return "successfully updated";
+                }
+                else
+                {
+                    return "not updated ";
+                }
+            }
+        }
 
-        //    using (var context = new ContractorFindingContext())
-        //    {
-        //        contractorFindingContext.ContractorDetails.Update(contractorDetail);
-        //        contractorFindingContext.SaveChanges();
-        //        return "update successfull";
-        //    }
-
-
-        //return "some fields are not mentioned";
-
+        //DELETE
+        public string DeleteContractor(ContractorDetail contractorDetail)
+        {
+            ContractorDetail contractor = contractorFindingContext.ContractorDetails.Where(x => x.License == contractorDetail.License).FirstOrDefault()!;
+            contractorFindingContext.ContractorDetails.Remove(contractor);
+            contractorFindingContext.SaveChanges();
+            return "Deleted";
+        }
 
     }
 }

@@ -21,6 +21,8 @@ public partial class ContractorDetail
 
     public int Pincode { get; set; }
 
+    public long? PhoneNumber { get; set; }
+
     public virtual TbUser? Contractor { get; set; }
 
     public virtual TbGender? GenderNavigation { get; set; }
