@@ -24,11 +24,18 @@ namespace Service
         }
 
         //CREATE Contractor Details
-        public string CreateContractor(ContractorDetail contractorDetail)
+        //public string CreateContractor(ContractorDetail contractorDetail)
+        //{
+        //    contractorFindingContext.ContractorDetails.Add(contractorDetail);
+        //    contractorFindingContext.SaveChanges();
+        //    return "Successful!";
+        //}
+
+        public bool CreateContractor(ContractorDetail contractorDetail)
         {
             contractorFindingContext.ContractorDetails.Add(contractorDetail);
             contractorFindingContext.SaveChanges();
-            return "Successful!";
+            return true;
         }
 
         //RETRIEVE
@@ -57,7 +64,31 @@ namespace Service
         }
 
         //UPDATE
-        public string updateContractorDetails(ContractorDetail contractorDetail)
+        //public string updateContractorDetails(ContractorDetail contractorDetail)
+        //{
+        //    using (var context = new ContractorFindingContext())
+        //    {
+        //        var contractorobj = context.ContractorDetails.Where(c => c.ContractorId == contractorDetail.ContractorId).FirstOrDefault();
+        //        if (contractorobj != null)
+        //        {
+        //            //context.ContractorDetails.Remove(contractorDetail);
+        //            contractorobj.CompanyName= contractorDetail.CompanyName;
+        //            contractorobj.Gender= contractorDetail?.Gender;
+        //            contractorobj.Services= contractorDetail?.Services;
+        //            contractorobj.PhoneNumber = contractorDetail?.PhoneNumber;
+        //            contractorobj.Lattitude= contractorDetail?.Lattitude;
+        //            contractorobj.Longitude = contractorDetail?.Longitude;
+        //            contractorobj.Pincode = contractorDetail.Pincode;
+        //            context.SaveChanges();
+        //            return "successfully updated";
+        //        }
+        //        else
+        //        {
+        //            return "not updated ";
+        //        }
+        //    }
+        //}
+        public bool updateContractorDetails(ContractorDetail contractorDetail)
         {
             using (var context = new ContractorFindingContext())
             {
@@ -65,30 +96,37 @@ namespace Service
                 if (contractorobj != null)
                 {
                     //context.ContractorDetails.Remove(contractorDetail);
-                    contractorobj.CompanyName= contractorDetail.CompanyName;
-                    contractorobj.Gender= contractorDetail?.Gender;
-                    contractorobj.Services= contractorDetail?.Services;
+                    contractorobj.CompanyName = contractorDetail.CompanyName;
+                    contractorobj.Gender = contractorDetail?.Gender;
+                    contractorobj.Services = contractorDetail?.Services;
                     contractorobj.PhoneNumber = contractorDetail?.PhoneNumber;
-                    contractorobj.Lattitude= contractorDetail?.Lattitude;
+                    contractorobj.Lattitude = contractorDetail?.Lattitude;
                     contractorobj.Longitude = contractorDetail?.Longitude;
                     contractorobj.Pincode = contractorDetail.Pincode;
-                    context.SaveChanges();
-                    return "successfully updated";
+                    if (contractorobj.CompanyName != null && contractorobj.Pincode != null && contractorDetail.License!= null)
+                    {
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    return "not updated ";
+                    return false;
                 }
             }
         }
 
         //DELETE
-        public string DeleteContractor(ContractorDetail contractorDetail)
+        public bool DeleteContractor(ContractorDetail contractorDetail)
         {
             ContractorDetail contractor = contractorFindingContext.ContractorDetails.Where(x => x.License == contractorDetail.License).FirstOrDefault()!;
             contractorFindingContext.ContractorDetails.Remove(contractor);
             contractorFindingContext.SaveChanges();
-            return "Deleted";
+            return true;
         }
 
     }

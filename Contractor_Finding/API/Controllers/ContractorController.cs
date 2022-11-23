@@ -26,7 +26,12 @@ namespace API.Controllers
         {
             try
             {
-                return new JsonResult(contractorService.CreateContractor(contractorDetail));
+                var contractor = contractorService.CreateContractor(contractorDetail);
+                if (contractor == true)
+                {
+                    return new JsonResult(new CrudStatus() { Status = true, Message = "Successful!" });
+                }
+                return new JsonResult(new CrudStatus() { Status = false, Message = "Failed" });
             }
             catch (Exception ex)
             {
@@ -50,11 +55,28 @@ namespace API.Controllers
 
         //UPDATE
         [HttpPost]
+        //public JsonResult UpdateContractor(ContractorDetail contractorDetail)
+        //{
+        //    try
+        //    {
+        //        return new JsonResult(contractorService.updateContractorDetails(contractorDetail));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new JsonResult(ex.Message);
+        //    }
+        //}
         public JsonResult UpdateContractor(ContractorDetail contractorDetail)
         {
             try
             {
-                return new JsonResult(contractorService.updateContractorDetails(contractorDetail));
+                var contractor = contractorService.updateContractorDetails(contractorDetail);
+                if (contractor == true)
+                {
+                    return new JsonResult(new CrudStatus() { Status = true, Message = "Successfully Updated" });
+                }
+                else
+                return new JsonResult(new CrudStatus() { Status = false, Message = "Updation Failed" });
             }
             catch (Exception ex)
             {
@@ -68,7 +90,12 @@ namespace API.Controllers
         {
             try
             {
-                return new JsonResult(contractorService.DeleteContractor(contractorDetail));
+                var contractor = contractorService.DeleteContractor(contractorDetail);
+                if (contractor == true)
+                {
+                    return new JsonResult(new CrudStatus() { Status = true, Message = "Deleted successful!" });
+                }
+                return new JsonResult(new CrudStatus() { Status=false});
             }
             catch (Exception ex)
             {
