@@ -23,14 +23,7 @@ namespace Service
             this.contractorFindingContext = contractorFindingContext;
         }
 
-        //CREATE Contractor Details
-        //public string CreateContractor(ContractorDetail contractorDetail)
-        //{
-        //    contractorFindingContext.ContractorDetails.Add(contractorDetail);
-        //    contractorFindingContext.SaveChanges();
-        //    return "Successful!";
-        //}
-
+        //create
         public bool CreateContractor(ContractorDetail contractorDetail)
         {
             contractorFindingContext.ContractorDetails.Add(contractorDetail);
@@ -64,30 +57,7 @@ namespace Service
         }
 
         //UPDATE
-        //public string updateContractorDetails(ContractorDetail contractorDetail)
-        //{
-        //    using (var context = new ContractorFindingContext())
-        //    {
-        //        var contractorobj = context.ContractorDetails.Where(c => c.ContractorId == contractorDetail.ContractorId).FirstOrDefault();
-        //        if (contractorobj != null)
-        //        {
-        //            //context.ContractorDetails.Remove(contractorDetail);
-        //            contractorobj.CompanyName= contractorDetail.CompanyName;
-        //            contractorobj.Gender= contractorDetail?.Gender;
-        //            contractorobj.Services= contractorDetail?.Services;
-        //            contractorobj.PhoneNumber = contractorDetail?.PhoneNumber;
-        //            contractorobj.Lattitude= contractorDetail?.Lattitude;
-        //            contractorobj.Longitude = contractorDetail?.Longitude;
-        //            contractorobj.Pincode = contractorDetail.Pincode;
-        //            context.SaveChanges();
-        //            return "successfully updated";
-        //        }
-        //        else
-        //        {
-        //            return "not updated ";
-        //        }
-        //    }
-        //}
+
         public bool updateContractorDetails(ContractorDetail contractorDetail)
         {
             using (var context = new ContractorFindingContext())

@@ -45,26 +45,25 @@ namespace API.Controllers
 
             try
             {
-                CrudStatus crudStatus = new CrudStatus();
-                crudStatus.Status = false;
-                crudStatus.Message = "Mail ID is already existing";
+                var userexist= userService.checkExistUser(registration);
 
-                var userWithSameEmail = contractorFindingContext.TbUsers.Where(m => m.EmailId == registration.EmailId).SingleOrDefault();
-                if (ModelState.IsValid)
-                {
-                    if (userWithSameEmail == null)
+                    if (userexist == false)
                     {
-
                         var details = userService.Register(registration);
-                        crudStatus.Status=true;
-                        crudStatus.Message = "successfull";
+                        if(details == true) 
+                        {
+                        return new JsonResult(new CrudStatus() { Status = true, Message = "Registration Successful!" });
+                        }
+                        else
+                        {
+                        return new JsonResult(new CrudStatus() { Status = false, Message = "registration failed" });
+                        }
                     }
                     else
                     {
-                        return new JsonResult(crudStatus);
+                         return new JsonResult(new CrudStatus() { Status = false, Message = "Mail ID is already existing" });
                     }
-                }
-                return new JsonResult(crudStatus);
+
             }
             catch (Exception ex)
             {
@@ -119,7 +118,11 @@ namespace API.Controllers
             try
             {
                 var details = userService.DeleteUser(user);
-                return new JsonResult(details);
+                if (details == true)
+                {
+                    return new JsonResult(new CrudStatus() { Status = true, Message = "Deleted successful!" });
+                }
+                return new JsonResult(new CrudStatus() { Status = false });
             }
             catch (Exception ex)
             {

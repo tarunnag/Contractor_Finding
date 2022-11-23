@@ -47,7 +47,7 @@ namespace API.Controllers
             {
                 return new JsonResult(contractorService.GetContractorDetails().ToList());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new JsonResult(ex.Message);
             }
@@ -55,17 +55,7 @@ namespace API.Controllers
 
         //UPDATE
         [HttpPost]
-        //public JsonResult UpdateContractor(ContractorDetail contractorDetail)
-        //{
-        //    try
-        //    {
-        //        return new JsonResult(contractorService.updateContractorDetails(contractorDetail));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new JsonResult(ex.Message);
-        //    }
-        //}
+
         public JsonResult UpdateContractor(ContractorDetail contractorDetail)
         {
             try

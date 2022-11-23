@@ -64,7 +64,7 @@ namespace Service
         //for Registration
         public bool Register(Registration registration)
         {
-            //Encrypt encrypt = new Encrypt();
+
             string encryptedPassword = encrypt.EncodePasswordToBase64(registration.Password);
             registration.CreatedDate = DateTime.Now;
             registration.UpdatedDate = null;
@@ -127,8 +127,7 @@ namespace Service
             }
             else
             {
-                Encrypt encrypt = new Encrypt();
-                TbUser tbUser = new TbUser();
+
                 string encrptnewpassword = encrypt.EncodePasswordToBase64(login.Password);
                 string encrptconfirmpassword = encrypt.EncodePasswordToBase64(login.confirmPassword);
                 if (encrptnewpassword == encrptconfirmpassword)
