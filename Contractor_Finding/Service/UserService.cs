@@ -17,11 +17,12 @@ namespace Service
 
 
         private readonly IEncrypt encrypt;
-        public UserService(ContractorFindingContext contractorFindingContext)
+        public UserService(ContractorFindingContext contractorFindingContext,IEncrypt encrypt)
         {
             this.contractorFindingContext = contractorFindingContext;
+            this.encrypt = encrypt;
         }
-
+       
         //For Display
         public List<UserDisplay> GetUserDetails()
         {
@@ -63,7 +64,7 @@ namespace Service
         //for Registration
         public bool Register(Registration registration)
         {
-            Encrypt encrypt = new Encrypt();
+            //Encrypt encrypt = new Encrypt();
             string encryptedPassword = encrypt.EncodePasswordToBase64(registration.Password);
             registration.CreatedDate = DateTime.Now;
             registration.UpdatedDate = null;
@@ -87,8 +88,8 @@ namespace Service
         public bool Login(Login login)
         {
 
-            Encrypt decrypt = new Encrypt();
-            string checkingpassword = decrypt.EncodePasswordToBase64(login.Password);
+            //Encrypt decrypt = new Encrypt();
+            string checkingpassword = encrypt.EncodePasswordToBase64(login.Password);
             var myUser = contractorFindingContext.TbUsers.
                 FirstOrDefault(u => u.EmailId == login.EmailId
                 && u.Password == checkingpassword);
