@@ -16,12 +16,13 @@ namespace Service
         private readonly ContractorFindingContext contractorFindingContext;
 
 
-        //private readonly IEncrypt encrypt;
-        public UserService(ContractorFindingContext contractorFindingContext)
+        private readonly IEncrypt encrypt;
+        public UserService(ContractorFindingContext contractorFindingContext,IEncrypt encrypt)
         {
             this.contractorFindingContext = contractorFindingContext;
+            this.encrypt = encrypt;
         }
-
+       
         //For Display
         public List<UserDisplay> GetUserDetails()
         {
@@ -40,14 +41,34 @@ namespace Service
             return user;
         }
 
-        //for Registration
-        public string Register(Registration registration)
+        public bool checkExistUser(TbUser tbUser)
         {
-            Encrypt encrypt = new Encrypt(); 
+            var email= contractorFindingContext.TbUsers.Where(e=>e.EmailId==tbUser.EmailId).FirstOrDefault();
+            if (email == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        //public bool Register(Registration registration)
+        //{
+        //    registration.Password= encrypt.EncodePasswordToBase64(registration.Password);
+        //    registration.CreatedDate = DateTime.Now;
+        //    registration.UpdatedDate = null;
+        //    registration.Active = true;
+        //    contractorFindingContext.TbUsers.Add(registration);
+        //    return true;
+        //}
+
+        //for Registration
+        public bool Register(Registration registration)
+        {
+
             string encryptedPassword = encrypt.EncodePasswordToBase64(registration.Password);
-            registration.CreatedDate=DateTime.Now;
+            registration.CreatedDate = DateTime.Now;
             registration.UpdatedDate = null;
-            registration.Active=true;
+            registration.Active = true;
             string passwordconfirm = encrypt.EncodePasswordToBase64(registration.confirmationPassword);
             registration.Password = encryptedPassword;
             registration.confirmationPassword = passwordconfirm;
@@ -55,58 +76,71 @@ namespace Service
             {
                 contractorFindingContext.TbUsers.Add(registration);
                 contractorFindingContext.SaveChanges();
-                return "registration sucessfull";
+                return true;
             }
             else
             {
-                return "password not matched";
+                return false;
             }
         }
 
         //for Login
-        public string Login(Login login)
+        public bool Login(Login login)
         {
-            Encrypt decrypt = new Encrypt();
-            string checkingpassword = decrypt.EncodePasswordToBase64(login.Password);
+
+            //Encrypt decrypt = new Encrypt();
+            string checkingpassword = encrypt.EncodePasswordToBase64(login.Password);
             var myUser = contractorFindingContext.TbUsers.
                 FirstOrDefault(u => u.EmailId == login.EmailId
                 && u.Password == checkingpassword);
             if (myUser == null)
             {
-                return "login failed";
+                return false;
             }
             else
             {
-                return "login successful";
+                return true;
             }
 
         }
 
         //for forgotpassword case
-        public string forgotpassword(Login login)
+
+        //public bool forgotpassword(Login login)
+        //{
+        //    TbUser user = contractorFindingContext.TbUsers.Where(a => a.EmailId == login.EmailId).SingleOrDefault();
+        //    user.Password = encrypt.EncodePasswordToBase64(login.Password);
+        //    user.UpdatedDate = DateTime.Now;
+        //    contractorFindingContext.Entry(user).State = EntityState.Modified;
+        //    contractorFindingContext.SaveChanges();
+        //    return true;
+        //}
+
+        //for forgotpassword case
+        public bool forgotpassword(Login login)
         {
+
             var userWithSameEmail = contractorFindingContext.TbUsers.Where(m => m.EmailId == login.EmailId).SingleOrDefault();
             if (userWithSameEmail == null)
             {
-                return "enter the correct the emailid";
+                return false;
             }
             else
             {
-                Encrypt encrypt = new Encrypt();
-                TbUser tbUser = new TbUser();
+
                 string encrptnewpassword = encrypt.EncodePasswordToBase64(login.Password);
-                string encrptconfirmpassword = encrypt.EncodePasswordToBase64(login.confirmPassword);              
+                string encrptconfirmpassword = encrypt.EncodePasswordToBase64(login.confirmPassword);
                 if (encrptnewpassword == encrptconfirmpassword)
                 {
                     userWithSameEmail.Password = encrptconfirmpassword;
                     userWithSameEmail.UpdatedDate = DateTime.Now;
                     contractorFindingContext.Entry(userWithSameEmail).State = EntityState.Modified;
                     contractorFindingContext.SaveChanges();
-                    return "password change successful";
+                    return true;
                 }
                 else
                 {
-                    return "password wrong";
+                    return false;
                 }
 
             }

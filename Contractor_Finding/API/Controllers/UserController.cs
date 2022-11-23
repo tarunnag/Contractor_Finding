@@ -39,30 +39,37 @@ namespace API.Controllers
 
         //for user registration
         // POST api/<ContractorController>
-        [HttpPost]
+        [HttpPut]
         public JsonResult RegisterUser(Registration registration)
         {
+
             try
             {
-                var userWithSameEmail = contractorFindingContext.TbUsers.Where(m => m.EmailId == registration.EmailId).SingleOrDefault();
-                if (ModelState.IsValid)
-                {
-                    if (userWithSameEmail == null)
+                var userexist= userService.checkExistUser(registration);
+
+                    if (userexist == false)
                     {
                         var details = userService.Register(registration);
-                        return new JsonResult(details);
+                        if(details == true) 
+                        {
+                        return new JsonResult(new CrudStatus() { Status = true, Message = "Registration Successful!" });
+                        }
+                        else
+                        {
+                        return new JsonResult(new CrudStatus() { Status = false, Message = "registration failed" });
+                        }
                     }
                     else
                     {
-                        return new JsonResult("email already in use");
+                         return new JsonResult(new CrudStatus() { Status = false, Message = "Mail ID is already existing" });
                     }
-                }
+
             }
             catch (Exception ex)
             {
                 return new JsonResult(ex.Message);
             }
-            return new JsonResult("registration success!");
+            
         }
 
         //for user login 
@@ -70,9 +77,14 @@ namespace API.Controllers
         public JsonResult LoginUser(Login login)
         {
             try
-            {
+            {               
                 var details = userService.Login(login);
-                return new JsonResult(details);
+                if(details==true)
+                {
+                    return new JsonResult(new CrudStatus() { Status= true, Message="Login Successfull!"});
+                }
+                return new JsonResult(new CrudStatus() { Status=false,Message="LoginFailed"});
+                
             }
             catch (Exception ex)
             {
@@ -87,7 +99,11 @@ namespace API.Controllers
             try
             {
                 var details = userService.forgotpassword(login);
-                return new JsonResult(details);
+                if (details ==true)
+                {
+                    return new JsonResult(new CrudStatus() { Status = true, Message = "Password Updated" });
+                }
+                return new JsonResult(new CrudStatus() { Status = false, Message = "Not Updated" });             
             }
             catch (Exception ex)
             {
@@ -102,7 +118,11 @@ namespace API.Controllers
             try
             {
                 var details = userService.DeleteUser(user);
-                return new JsonResult(details);
+                if (details == true)
+                {
+                    return new JsonResult(new CrudStatus() { Status = true, Message = "Deleted successful!" });
+                }
+                return new JsonResult(new CrudStatus() { Status = false });
             }
             catch (Exception ex)
             {

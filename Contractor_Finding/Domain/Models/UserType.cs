@@ -9,7 +9,5 @@ public partial class UserType
 
     public string? Usertype1 { get; set; }
 
-    public virtual ICollection<ContractorDetail> ContractorDetails { get; } = new List<ContractorDetail>();
-
     public virtual ICollection<TbUser> TbUsers { get; } = new List<TbUser>();
 }
