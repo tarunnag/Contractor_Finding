@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class ContractorServive : IContractorServive
+    public class ContractorService : IContractorService
     {
         private readonly ContractorFindingContext contractorFindingContext;
 
         //Constructor
-        public ContractorServive(ContractorFindingContext contractorFindingContext)
+        public ContractorService(ContractorFindingContext contractorFindingContext)
         {
             this.contractorFindingContext = contractorFindingContext;
         }

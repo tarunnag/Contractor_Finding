@@ -11,10 +11,10 @@ namespace API.Controllers
     public class ContractorController : ControllerBase
     {
         private readonly ContractorFindingContext contractorFindingContext;
-        private readonly IContractorServive contractorService;
+        private readonly IContractorService contractorService;
 
         //Constructor
-        public ContractorController(ContractorFindingContext contractorFindingContext, IContractorServive contractorService)
+        public ContractorController(ContractorFindingContext contractorFindingContext, IContractorService contractorService)
         {
             this.contractorFindingContext = contractorFindingContext;
             this.contractorService = contractorService;
