@@ -20,6 +20,10 @@ public partial class ContractorFindingContext : DbContext
 
     public virtual DbSet<ServiceProviding> ServiceProvidings { get; set; }
 
+    public virtual DbSet<TbBuilding> TbBuildings { get; set; }
+
+    public virtual DbSet<TbCustomer> TbCustomers { get; set; }
+
     public virtual DbSet<TbGender> TbGenders { get; set; }
 
     public virtual DbSet<TbUser> TbUsers { get; set; }
@@ -28,7 +32,7 @@ public partial class ContractorFindingContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=65.0.181.176;Database=Contractor_Finding;User Id=admin; Password=Asdf1234*;TrustServerCertificate=True; Timeout=300;command timeout=300");
+        => optionsBuilder.UseSqlServer("Server=65.0.181.176;Database=Contractor_Finding;User Id=admin; Password=Asdf1234*;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -72,6 +76,39 @@ public partial class ContractorFindingContext : DbContext
             entity.Property(e => e.ServiceName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TbBuilding>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Tb_Build__3214EC27A87D4A5F");
+
+            entity.ToTable("Tb_Building");
+
+            entity.HasIndex(e => e.Building, "UQ__Tb_Build__55366371B58A2F27").IsUnique();
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
+            entity.Property(e => e.Building)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TbCustomer>(entity =>
+        {
+            entity.HasKey(e => e.RegistrationNo).HasName("PK__Tb_Custo__6EF5E04387FA6484");
+
+            entity.ToTable("Tb_Customer");
+
+            entity.Property(e => e.RegistrationNo)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.BuildingType).HasColumnName("Building_Type");
+            entity.Property(e => e.LandSqft).HasColumnName("Land_sqft");
+
+            entity.HasOne(d => d.BuildingTypeNavigation).WithMany(p => p.TbCustomers)
+                .HasForeignKey(d => d.BuildingType)
+                .HasConstraintName("FK__Tb_Custom__Build__0880433F");
         });
 
         modelBuilder.Entity<TbGender>(entity =>

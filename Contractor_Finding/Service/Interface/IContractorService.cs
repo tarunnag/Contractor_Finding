@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service.Interface
 {
-    public interface IContractorServive
+    public interface IContractorService
     {
         //string CreateContractor(ContractorDetail contractorDetail);
         public bool CreateContractor(ContractorDetail contractorDetail);
