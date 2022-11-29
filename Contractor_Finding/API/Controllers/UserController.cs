@@ -47,22 +47,22 @@ namespace API.Controllers
             {
                 var userexist= userService.checkExistUser(registration);
 
-                    if (userexist == false)
+                if (userexist != null)
+                {
+                    var details = userService.Register(registration);
+                    if (details != null)
                     {
-                        var details = userService.Register(registration);
-                        if(details == true) 
-                        {
                         return new JsonResult(new CrudStatus() { Status = true, Message = "Registration Successful!" });
-                        }
-                        else
-                        {
-                        return new JsonResult(new CrudStatus() { Status = false, Message = "registration failed" });
-                        }
                     }
                     else
                     {
-                         return new JsonResult(new CrudStatus() { Status = false, Message = "Mail ID is already existing" });
+                        return new JsonResult(new CrudStatus() { Status = false, Message = "registration failed" });
                     }
+                }
+                else
+                {
+                    return new JsonResult(new CrudStatus() { Status = false, Message = "Mail ID is already existing" });
+                }
 
             }
             catch (Exception ex)
@@ -79,7 +79,7 @@ namespace API.Controllers
             try
             {               
                 var details = userService.Login(login);
-                if(details==true)
+                if(details!=null)
                 {
                     return new JsonResult(new CrudStatus() { Status= true, Message="Login Successfull!"});
                 }
@@ -99,7 +99,7 @@ namespace API.Controllers
             try
             {
                 var details = userService.forgotpassword(login);
-                if (details ==true)
+                if (details != null)
                 {
                     return new JsonResult(new CrudStatus() { Status = true, Message = "Password Updated" });
                 }
