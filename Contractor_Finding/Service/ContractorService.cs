@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Persistence;
 using Service.Interface;
 using System;
@@ -24,11 +25,29 @@ namespace Service
         }
 
         //create
-        public bool CreateContractor(ContractorDetail contractorDetail)
+        public string CreateContractor(ContractorDetail contractorDetail)
         {
-            contractorFindingContext.ContractorDetails.Add(contractorDetail);
-            contractorFindingContext.SaveChanges();
-            return true;
+            var id = contractorFindingContext.TbUsers.Where(u => u.UserId == contractorDetail.ContractorId).FirstOrDefault();
+            var checklicense = contractorFindingContext.ContractorDetails.Where(u => u.License == contractorDetail.License).FirstOrDefault();
+            if (id != null && checklicense == null)
+            {
+                var license = contractorDetail.License.Trim();
+                if (license == string.Empty)
+                {
+                    return null;
+                   
+                }
+                else
+                {
+                    contractorFindingContext.ContractorDetails.Add(contractorDetail);
+                    contractorFindingContext.SaveChanges();
+                    return "Successful!";
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
 
         //RETRIEVE
@@ -37,9 +56,8 @@ namespace Service
             List<ContractorDisplay> contractors = (from c in contractorFindingContext.ContractorDetails
                                                    join g in contractorFindingContext.TbGenders on
                                                    c.Gender equals g.GenderId
-                                                   from e in contractorFindingContext.ContractorDetails
                                                    join h in contractorFindingContext.ServiceProvidings on
-                                                   e.Services equals h.ServiceId
+                                                   c.Services equals h.ServiceId
                                                    select new ContractorDisplay
                                                    {
                                                        ContractorId = c.ContractorId,
@@ -57,37 +75,37 @@ namespace Service
         }
 
         //UPDATE
-
-        public bool updateContractorDetails(ContractorDetail contractorDetail)
+        public string updateContractorDetails(ContractorDetail contractorDetail)
         {
-            using (var context = new ContractorFindingContext())
+
+            var contractorobj = contractorFindingContext.ContractorDetails.Where(c => c.ContractorId == contractorDetail.ContractorId).FirstOrDefault();
+            var licenseobj = contractorFindingContext.ContractorDetails.Where(c => c.License == contractorDetail.License).FirstOrDefault();
+            var licensecon = contractorobj.License;
+            if (contractorobj != null && licenseobj != null)
             {
-                var contractorobj = context.ContractorDetails.Where(c => c.ContractorId == contractorDetail.ContractorId).FirstOrDefault();
-                if (contractorobj != null)
+
+                contractorobj.CompanyName = contractorDetail.CompanyName;
+                contractorobj.Gender = contractorDetail?.Gender;
+                contractorobj.Services = contractorDetail?.Services;
+                contractorobj.PhoneNumber = contractorDetail?.PhoneNumber;
+                contractorobj.Lattitude = contractorDetail?.Lattitude;
+                contractorobj.Longitude = contractorDetail?.Longitude;
+                contractorobj.Pincode = contractorDetail.Pincode;
+                if (contractorDetail.CompanyName != null && contractorDetail.Pincode != 0 && contractorDetail.ContractorId == contractorobj.ContractorId && contractorDetail.License == licensecon)
                 {
-                    //context.ContractorDetails.Remove(contractorDetail);
-                    contractorobj.CompanyName = contractorDetail.CompanyName;
-                    contractorobj.Gender = contractorDetail?.Gender;
-                    contractorobj.Services = contractorDetail?.Services;
-                    contractorobj.PhoneNumber = contractorDetail?.PhoneNumber;
-                    contractorobj.Lattitude = contractorDetail?.Lattitude;
-                    contractorobj.Longitude = contractorDetail?.Longitude;
-                    contractorobj.Pincode = contractorDetail.Pincode;
-                    if (contractorobj.CompanyName != null && contractorobj.Pincode != null && contractorDetail.License!= null)
-                    {
-                        context.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    contractorFindingContext.SaveChanges();
+                    return "sucessfully Updated!";
                 }
                 else
                 {
-                    return false;
+                    return "Updation failed";
                 }
             }
+            else
+            {
+                return "Updation failed";
+            }
+
         }
 
         //DELETE

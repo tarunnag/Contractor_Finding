@@ -3,23 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{019F1E87-F2B3-48DC-9D65-D89004A12756}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{019F1E87-F2B3-48DC-9D65-D89004A12756}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6893345B-5A37-4477-BAA9-EA6B160C7A13} = {6893345B-5A37-4477-BAA9-EA6B160C7A13}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{6893345B-5A37-4477-BAA9-EA6B160C7A13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{6893345B-5A37-4477-BAA9-EA6B160C7A13}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A551C2C9-B9B4-47A6-A907-B4D0911F6948} = {A551C2C9-B9B4-47A6-A907-B4D0911F6948}
 		{F7B3A1DE-615B-4DF8-92D3-39743F71F892} = {F7B3A1DE-615B-4DF8-92D3-39743F71F892}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{A551C2C9-B9B4-47A6-A907-B4D0911F6948}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{A551C2C9-B9B4-47A6-A907-B4D0911F6948}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{F7B3A1DE-615B-4DF8-92D3-39743F71F892}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\Persistence.csproj", "{F7B3A1DE-615B-4DF8-92D3-39743F71F892}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A551C2C9-B9B4-47A6-A907-B4D0911F6948} = {A551C2C9-B9B4-47A6-A907-B4D0911F6948}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractorFinding_Test", "ContractorFinding_Test\ContractorFinding_Test.csproj", "{4A759A18-FB17-492F-8614-42D713653774}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{F7B3A1DE-615B-4DF8-92D3-39743F71F892}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7B3A1DE-615B-4DF8-92D3-39743F71F892}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7B3A1DE-615B-4DF8-92D3-39743F71F892}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A759A18-FB17-492F-8614-42D713653774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A759A18-FB17-492F-8614-42D713653774}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A759A18-FB17-492F-8614-42D713653774}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A759A18-FB17-492F-8614-42D713653774}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
