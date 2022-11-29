@@ -98,12 +98,12 @@ namespace Service
                 }
                 else
                 {
-                    return "Updation failed";
+                    return null;
                 }
             }
             else
             {
-                return "Updation failed";
+                return null;
             }
 
         }
