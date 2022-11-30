@@ -25,7 +25,7 @@ namespace API.Controllers
             try
             {
                 var customer = customerService.CreateCustomer(tbCustomer);
-                if (customer == true)
+                if (customer !=null)
                 {
                     return new JsonResult(new CrudStatus() { Status = true, Message = "Added Successful!" });
                 }
