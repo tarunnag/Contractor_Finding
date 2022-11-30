@@ -83,11 +83,10 @@ namespace ContractorFinding_Test.Services
             var contractor = new ContractorDetail() { ContractorId = 4, CompanyName = "ramtraders", Gender = 2, License = "KL-456789", Services = 1, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432, PhoneNumber = 9876543322 };
 
             //Act
-            var result = contractorService.updateContractorDetails(contractor);
-            var expected = "Updation failed";
+            var result = contractorService.updateContractorDetails(contractor);        
 
             //Assert
-            Assert.Equal(result, expected);
+            Assert.Null(result);
 
         }
 
@@ -100,10 +99,9 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = contractorService.updateContractorDetails(contractor);
-            var expected = "Updation failed";
-
+          
             //Assert
-            Assert.Equal(result, expected);
+            Assert.Null(result);
 
         }
 
@@ -115,10 +113,9 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = contractorService.updateContractorDetails(contractor);
-            var expected = "Updation failed";
 
             //Assert
-            Assert.Equal(result, expected);
+            Assert.Null(result);
 
         }
 
@@ -130,10 +127,9 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = contractorService.updateContractorDetails(contractor);
-            var expected = "Updation failed";
 
             //Assert
-            Assert.Equal(result, expected);
+            Assert.Null(result);
 
         }
     }

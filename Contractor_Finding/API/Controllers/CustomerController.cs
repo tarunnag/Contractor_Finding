@@ -25,7 +25,7 @@ namespace API.Controllers
             try
             {
                 var customer = customerService.CreateCustomer(tbCustomer);
-                if (customer == true)
+                if (customer !=null)
                 {
                     return new JsonResult(new CrudStatus() { Status = true, Message = "Added Successful!" });
                 }
@@ -62,7 +62,7 @@ namespace API.Controllers
             try
             {
                 var contractor = customerService.UpdateCustomerDetails(tbCustomer);
-                if (contractor == true)
+                if (contractor != null)
                 {
                     return new JsonResult(new CrudStatus() { Status = true, Message = "Successfully Updated" });
                 }

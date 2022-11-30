@@ -20,17 +20,26 @@ namespace Service
         }
 
         //create
-        public bool CreateCustomer(TbCustomer tbCustomer)
+        public string CreateCustomer(TbCustomer tbCustomer)
         {
-            if (tbCustomer.RegistrationNo == null)
+            var registrationID = contractorFindingContext.TbCustomers.Where(r => r.RegistrationNo == tbCustomer.RegistrationNo).FirstOrDefault();
+            if (registrationID == null && tbCustomer.LandSqft != null)
             {
-                return false;
+                var ID = tbCustomer.RegistrationNo.Trim();
+                if (ID == string.Empty)
+                {
+                    return null;
+                }
+                else
+                {
+                    contractorFindingContext.TbCustomers.Add(tbCustomer);
+                    contractorFindingContext.SaveChanges();
+                    return "Successfully Added";
+                }
             }
             else
             {
-                contractorFindingContext.TbCustomers.Add(tbCustomer);
-                contractorFindingContext.SaveChanges();
-                return true;
+                return null;
             }
         }
 
@@ -54,7 +63,7 @@ namespace Service
         }
 
         //UPDATE
-        public bool UpdateCustomerDetails(TbCustomer tbCustomer)
+        public string UpdateCustomerDetails(TbCustomer tbCustomer)
         {
             using (var context = new ContractorFindingContext())
             {
@@ -69,13 +78,13 @@ namespace Service
                     if (customer.LandSqft != null && customer.RegistrationNo != null && customer.Pincode != null)
                     {
                         context.SaveChanges();
-                        return true;
+                        return "Successfully Updated!";
                     }
-                    return false;
+                    return null;
                 }
                 else
                 {
-                    return false;
+                    return null;
                 }
 
             }
