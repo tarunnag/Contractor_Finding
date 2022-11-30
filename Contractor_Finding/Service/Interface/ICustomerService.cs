@@ -10,9 +10,9 @@ namespace Service.Interface
 {
     public interface ICustomerService
     {
-        bool CreateCustomer(TbCustomer tbCustomer);
+        string CreateCustomer(TbCustomer tbCustomer);
         List<CustomerDisplay> GetCustomerDetails();
-        bool UpdateCustomerDetails(TbCustomer tbCustomer);
+        string UpdateCustomerDetails(TbCustomer tbCustomer);
 
         bool DeleteCustomer(TbCustomer tbCustomer);
     }

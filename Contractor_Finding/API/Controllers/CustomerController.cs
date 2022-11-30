@@ -62,7 +62,7 @@ namespace API.Controllers
             try
             {
                 var contractor = customerService.UpdateCustomerDetails(tbCustomer);
-                if (contractor == true)
+                if (contractor != null)
                 {
                     return new JsonResult(new CrudStatus() { Status = true, Message = "Successfully Updated" });
                 }
