@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]// (Policy = "User")]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

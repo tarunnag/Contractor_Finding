@@ -22,21 +22,30 @@ namespace Service
             this.contractorFindingContext = contractorFindingContext;
             this.encrypt = encrypt;
         }
-       
+        public bool AuthenticateUser(string username, string password)
+        {
+            var x = contractorFindingContext.TbUsers.Where(x => x.EmailId == username && x.Password == password).ToList();
+            if (x.Count() > 0)
+                return true;
+            else
+                return false;
+        }
         //For Display
         public List<UserDisplay> GetUserDetails()
         {
             List<UserDisplay> user = (from u in contractorFindingContext.TbUsers
                                       join ud in contractorFindingContext.UserTypes on
                                       u.TypeUser equals ud.TypeId
+                                   
                                       select new UserDisplay
                                       {
                                           UserId = u.UserId,
-                                          TypeUser = ud.Usertype1,
+                                          userType = ud.Usertype1,
                                           FirstName = u.FirstName,
                                           LastName = u.FirstName,
                                           EmailId = u.EmailId,
                                           PhoneNumber = u.PhoneNumber,
+                                         UserRole=ud.Usertype1
                                       }).ToList();
             return user;
         }
@@ -153,7 +162,12 @@ namespace Service
 
             }
         }
-
+        public TbUser GetById(string id)
+        {
+            var user = contractorFindingContext.TbUsers.Where(x => x.EmailId == id).FirstOrDefault();
+            if (user == null) throw new KeyNotFoundException("User not found");
+            return user;
+        }
         //for delete deatils
         public bool DeleteUser(TbUser user)
         {
