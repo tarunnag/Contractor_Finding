@@ -10,12 +10,11 @@ namespace Service.Interface
 {
     public interface IContractorService
     {
-        //string CreateContractor(ContractorDetail contractorDetail);
         public string CreateContractor(ContractorDetail contractorDetail);
         List<ContractorDisplay> GetContractorDetails();
-        //string updateContractorDetails(ContractorDetail contractorDetail);
         public string updateContractorDetails(ContractorDetail contractorDetail);
 
         public bool DeleteContractor(ContractorDetail contractorDetail);
+        List<ContractorDisplay> SearchBypincode(int pincode);
     }
 }
