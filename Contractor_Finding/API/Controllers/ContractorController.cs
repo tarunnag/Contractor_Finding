@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
@@ -6,6 +7,7 @@ using Service.Interface;
 
 namespace API.Controllers
 {
+    [Authorize]//(Policy = "contractor")]
     [Route("api/[controller]")]
     [ApiController]
     public class ContractorController : ControllerBase

@@ -13,7 +13,10 @@ namespace Service.Interface
         public List<UserDisplay> GetUserDetails();
         string checkExistUser(TbUser tbUser);
         string Register(Registration registration);
- 
+        TbUser GetById(string id);
+       
+        bool AuthenticateUser(string username, string password);
+
         string Login(Login login);
 
         string forgotpassword(Login login);
