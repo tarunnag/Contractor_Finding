@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
@@ -6,13 +7,14 @@ using Service.Interface;
 
 namespace API.Controllers
 {
+    [Authorize(Policy = "customer")]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
         private readonly ContractorFindingContext contractorFindingContext;
         private readonly ICustomerService customerService;
-
+        //customer 
         public CustomerController(ContractorFindingContext contractorFindingContext, ICustomerService customerService)
         {
             this.contractorFindingContext = contractorFindingContext;

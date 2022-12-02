@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
@@ -6,12 +7,14 @@ using Service.Interface;
 
 namespace API.Controllers
 {
+    [Authorize(Policy = "contractor")]
     [Route("api/[controller]")]
     [ApiController]
     public class ContractorController : ControllerBase
     {
         private readonly ContractorFindingContext contractorFindingContext;
         private readonly IContractorService contractorService;
+
 
         //Constructor
         public ContractorController(ContractorFindingContext contractorFindingContext, IContractorService contractorService)
@@ -22,6 +25,7 @@ namespace API.Controllers
 
         //create
         [HttpPut]
+        
         public JsonResult CreateContractor(ContractorDetail contractorDetail)
         {
             try
@@ -41,6 +45,7 @@ namespace API.Controllers
 
         //RETRIVE
         [HttpGet]
+
         public JsonResult GetContractorDetails()
         {
             try
