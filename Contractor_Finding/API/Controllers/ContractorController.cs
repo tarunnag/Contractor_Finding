@@ -96,7 +96,19 @@ namespace API.Controllers
             {
                 return new JsonResult(ex.Message);
             }
- 
+        }
+
+        [HttpGet("Pincode")]
+        public JsonResult SearchBypincode(int pin)
+        {
+            try
+            {
+                return new JsonResult(contractorService.SearchBypincode(pin).ToList());
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(ex.Message);
+            }
         }
     }
 }

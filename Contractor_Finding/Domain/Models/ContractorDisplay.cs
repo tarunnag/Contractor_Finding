@@ -6,23 +6,14 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public  class ContractorDisplay
+    public  class ContractorDisplay :ContractorDetail
     {
-        public int? ContractorId { get; set; }
-
-        public string CompanyName { get; set; } = null!;
-
-        public string? Gender { get; set; }
-
-        public string License { get; set; } = null!;
-
         public string? Services { get; set; }
+        public string? Gender { get; set; }
+        public string FirstName { get; set; } = null!;
 
-        public double? Lattitude { get; set; }
+        public string? LastName { get; set; }
 
-        public double? Longitude { get; set; }
-
-        public int Pincode { get; set; }
-        public long? PhoneNumber { get; set; }
+        public string EmailId { get; set; } = null!;
     }
 }

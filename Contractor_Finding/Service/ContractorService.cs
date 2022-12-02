@@ -56,6 +56,8 @@ namespace Service
             List<ContractorDisplay> contractors = (from c in contractorFindingContext.ContractorDetails
                                                    join g in contractorFindingContext.TbGenders on
                                                    c.Gender equals g.GenderId
+                                                   join user in contractorFindingContext.TbUsers on c.ContractorId equals user.UserId
+                                                   //from e in contractorFindingDemoContext.ContractorDetails
                                                    join h in contractorFindingContext.ServiceProvidings on
                                                    c.Services equals h.ServiceId
                                                    select new ContractorDisplay
@@ -68,8 +70,10 @@ namespace Service
                                                        Lattitude = c.Lattitude,
                                                        Longitude = c.Longitude,
                                                        Pincode = c.Pincode,
-                                                       PhoneNumber = c.PhoneNumber,
-
+                                                       FirstName = user.FirstName,
+                                                       LastName = user.LastName,
+                                                       EmailId = user.EmailId,
+                                                       PhoneNumber = c.PhoneNumber
                                                    }).ToList();
             return contractors;
         }
@@ -117,5 +121,10 @@ namespace Service
             return true;
         }
 
+        //search
+        public List<ContractorDisplay> SearchBypincode(int pincode)
+        {
+            return GetContractorDetails().Where(x => x.Pincode == pincode).ToList();
+        }
     }
 }
