@@ -6,19 +6,13 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class UserDisplay
+    public class UserDisplay:TbUser
     {
-        public int UserId { get; set; }
+       
 
-        public string? TypeUser { get; set; }
+        public string UserTypeName { get; set; }
 
-        public string? FirstName { get; set; }
-
-        public string? LastName { get; set; }
-
-        public string EmailId { get; set; } = null!;
-
-        public long PhoneNumber { get; set; }
+        
         //public DateTime? CreatedDate { get; set; }
 
         //public DateTime? UpdatedDate { get; set; }

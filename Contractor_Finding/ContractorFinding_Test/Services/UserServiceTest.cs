@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace ContractorFinding_Test.Services
 {
@@ -23,12 +24,14 @@ namespace ContractorFinding_Test.Services
         DataFixture _fixture;
         UserService userService;
         Mock<IEncrypt> encrypt;
+        Mock<IConfiguration> config;
 
         public UserServiceTest(DataFixture fixture)
         {
             _fixture = fixture;
             encrypt = new Mock<IEncrypt>();
-            userService = new UserService(_fixture.context, encrypt.Object);
+            config = new Mock<IConfiguration>();
+            userService = new UserService(_fixture.context, encrypt.Object, config.Object);
         }
 
         [Fact]

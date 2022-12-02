@@ -1,9 +1,16 @@
 ﻿using Domain;
+using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Persistence;
 using Service;
 using Service.Interface;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace API.Controllers
 {
@@ -17,19 +24,22 @@ namespace API.Controllers
         //constructor
         public UserController(ContractorFindingContext contractordemoContext, IUserService userService)
         {
-            this.contractorFindingContext = contractordemoContext;
+            this.contractorFindingContext = contractordemoContext; 
             this.userService = userService;
         }
+     
 
         //for get user details
         // GET: api/<ContractorController>
         [HttpGet]
+        [Authorize]
         public JsonResult Getuserdetails()
         {
             try
             {
-                var details = userService.GetUserDetails();
-                return new JsonResult(details);
+                //var details = userService.GetUserDetails();
+                //return new JsonResult(details);
+                return new JsonResult(userService.GetUserDetails().ToList());
             }
             catch (Exception ex)
             {
@@ -72,25 +82,62 @@ namespace API.Controllers
             
         }
 
-        //for user login 
+        ////for user login //
         [HttpPost("login")]
         public JsonResult LoginUser(Login login)
         {
             try
-            {               
+            {
                 var details = userService.Login(login);
-                if(details!=null)
+                if (details != null)
                 {
-                    return new JsonResult(new CrudStatus() { Status= true, Message="Login Successfull!"});
+                    return new JsonResult(new CrudStatus() { Status = true, Message = details });
                 }
-                return new JsonResult(new CrudStatus() { Status=false,Message="LoginFailed"});
-                
+                return new JsonResult(new CrudStatus() { Status = false, Message = "LoginFailed" });
+
             }
             catch (Exception ex)
             {
                 return new JsonResult(ex.Message);
             }
         }
+        //Refresh Token
+        [HttpPost]
+        [Route("Refresh_Token")]
+        public IActionResult RefreshToken(string accessToken)
+        {
+            if (accessToken == "")
+            {
+                return BadRequest("Invalid client request");
+            }
+
+
+            //string? refreshToken = tokenModel.RefreshToken;
+
+            var principal = userService.GetPrincipalFromExpiredToken(accessToken);
+            if (principal == null)
+            {
+                return BadRequest("Invalid access token or refresh token");
+            }
+            string? username = userService.ValidateJwtToken(accessToken);
+            TbUser user = userService.GetUserDetails().Where(x => x.EmailId == username).FirstOrDefault();
+
+            if (user == null)
+            {
+                return BadRequest("Invalid access token or refresh token");
+            }
+
+            string? newAccessToken = userService.GenerateToken(user);
+
+            if (newAccessToken == null)
+                return Unauthorized();
+            else
+                return Ok(newAccessToken);
+
+
+        }
+
+
 
         //for forgot password
         [HttpPost("forgotpassword")]
@@ -110,6 +157,7 @@ namespace API.Controllers
                 return new JsonResult(ex.Message);
             }
         }
+        
 
         // for DELETE 
         [HttpDelete]
