@@ -70,9 +70,8 @@ namespace Service
         //UPDATE
         public string UpdateCustomerDetails(TbCustomer tbCustomer)
         {
-            using (var context = new ContractorFindingContext())
             {
-                var customer = context.TbCustomers.Where(x => x.RegistrationNo == tbCustomer.RegistrationNo).FirstOrDefault();
+                var customer = contractorFindingContext.TbCustomers.Where(x => x.RegistrationNo == tbCustomer.RegistrationNo).FirstOrDefault();
                 if (customer != null)
                 {
                     customer.LandSqft = tbCustomer.LandSqft;
@@ -83,7 +82,7 @@ namespace Service
                     customer.CustomerId= tbCustomer.CustomerId;
                     if (customer.LandSqft != null && customer.RegistrationNo != null && customer.Pincode != null)
                     {
-                        context.SaveChanges();
+                        contractorFindingContext.SaveChanges();
                         return "Successfully Updated!";
                     }
                     return null;
