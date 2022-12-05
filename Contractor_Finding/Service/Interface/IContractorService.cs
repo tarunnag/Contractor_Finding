@@ -15,6 +15,6 @@ namespace Service.Interface
         public string updateContractorDetails(ContractorDetail contractorDetail);
 
         public bool DeleteContractor(ContractorDetail contractorDetail);
-        List<ContractorDisplay> SearchBypincode(int pincode);
+
     }
 }
