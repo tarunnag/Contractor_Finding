@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
+using Service;
 using Service.Interface;
 
 namespace API.Controllers
@@ -14,12 +15,14 @@ namespace API.Controllers
     {
         private readonly ContractorFindingContext contractorFindingContext;
         private readonly ICustomerService customerService;
-        //customer 
+
+        //Constructor 
         public CustomerController(ContractorFindingContext contractorFindingContext, ICustomerService customerService)
         {
             this.contractorFindingContext = contractorFindingContext;
             this.customerService = customerService;
         }
+
         //create
         [HttpPut]
         public JsonResult CreateContractor(TbCustomer tbCustomer)
@@ -41,7 +44,6 @@ namespace API.Controllers
                 return new JsonResult(ex.Message);
             }
         }
-
 
         //RETRIEVE
         [HttpGet]
@@ -95,5 +97,34 @@ namespace API.Controllers
                 return new JsonResult(ex.Message);
             }
         }
+
+        //SerachingContractor
+        [HttpGet("Pincode")]
+        public JsonResult SearchBypincode(int pin)
+        {
+            try
+            {
+                return new JsonResult(customerService.SearchBypincode(pin).ToList());
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(ex.Message);
+            }
+        }
+
+        //Sending Notification
+        [HttpPost("SendingToContractor")]
+        public JsonResult SendNotification(long phonenumber, string registration, int id)
+        {
+            try
+            {
+
+                return new JsonResult(customerService.SendMessage(phonenumber, registration, id));
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(ex.Message);
+            }
+        }      
     }
 }

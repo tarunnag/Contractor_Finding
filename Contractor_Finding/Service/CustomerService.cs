@@ -7,16 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Persistence;
+using Twilio.TwiML.Voice;
 
 namespace Service
 {
     public class CustomerService : ICustomerService
     {
         private readonly ContractorFindingContext contractorFindingContext;
+        private readonly SendMessage sms;
+        private readonly ContractorService _contractorservice;
 
         public CustomerService(ContractorFindingContext contractorFindingContext)
         {
             this.contractorFindingContext = contractorFindingContext;
+            this.sms = new SendMessage();
+            _contractorservice = new ContractorService(contractorFindingContext);
         }
 
         //create
@@ -75,6 +80,7 @@ namespace Service
                     customer.Lattitude = tbCustomer.Lattitude;
                     customer.Longitude = tbCustomer.Longitude;
                     customer.Pincode = tbCustomer.Pincode;
+                    customer.CustomerId= tbCustomer.CustomerId;
                     if (customer.LandSqft != null && customer.RegistrationNo != null && customer.Pincode != null)
                     {
                         context.SaveChanges();
@@ -97,6 +103,31 @@ namespace Service
             contractorFindingContext.TbCustomers.Remove(customer);
             contractorFindingContext.SaveChanges();
             return true;
+        }
+
+        //send message
+        public string SendMessage(long phonenumber, string reggistration, int id)
+        {
+            var phone = contractorFindingContext.ContractorDetails.Where(c => c.PhoneNumber == phonenumber).FirstOrDefault();
+            var registrationid = contractorFindingContext.TbCustomers.Where(c => c.RegistrationNo == reggistration).FirstOrDefault();
+            var customer = contractorFindingContext.TbUsers.Where(a => a.UserId == id).FirstOrDefault();
+            var custid = contractorFindingContext.TbCustomers.Where(a => a.CustomerId == id).FirstOrDefault();
+            if (phone != null && registrationid != null && custid != null && customer != null)
+            {
+                string message2 = customer.FirstName + " " + customer.LastName + " \n phone number : " + customer.PhoneNumber + " \n Emailid:  " + customer.EmailId + "\n Land squarefeet: " + registrationid.LandSqft + "\n Pincode:  " + registrationid.Pincode;
+                sms.SendMessageToContractor(message2, phonenumber);
+                return "Message sended";
+            }
+            else
+            {
+                return "failed";
+            }
+        }
+
+        //search
+        public List<ContractorDisplay> SearchBypincode(int pincode)
+        {
+            return _contractorservice.GetContractorDetails().Where(x => x.Pincode == pincode).ToList();
         }
     }
 }

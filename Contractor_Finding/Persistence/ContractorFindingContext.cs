@@ -109,6 +109,10 @@ public partial class ContractorFindingContext : DbContext
             entity.HasOne(d => d.BuildingTypeNavigation).WithMany(p => p.TbCustomers)
                 .HasForeignKey(d => d.BuildingType)
                 .HasConstraintName("FK__Tb_Custom__Build__0880433F");
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.TbCustomers)
+                .HasForeignKey(d => d.CustomerId)
+                .HasConstraintName("FK__Tb_Custom__Custo__0C50D423");
         });
 
         modelBuilder.Entity<TbGender>(entity =>
@@ -144,6 +148,7 @@ public partial class ContractorFindingContext : DbContext
             entity.Property(e => e.Password)
                 .HasMaxLength(30)
                 .IsUnicode(false);
+            entity.Property(e => e.RoleId).HasColumnName("role_id");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.TypeUserNavigation).WithMany(p => p.TbUsers)
