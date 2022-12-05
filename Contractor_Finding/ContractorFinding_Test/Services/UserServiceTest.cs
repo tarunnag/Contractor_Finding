@@ -46,7 +46,7 @@ namespace ContractorFinding_Test.Services
             var expect = _fixture.context.TbUsers.Count();
             var items = Assert.IsType<List<UserDisplay>>(result);
             Assert.Equal(expect, items.Count);
-          
+
         }
 
         [Fact]
@@ -111,8 +111,8 @@ namespace ContractorFinding_Test.Services
         [Fact]
         public void LogIn_with_new_mail()
         {
-            //Arrange
-            var user = new Login() { EmailId = "khadeeja@gmail.com", Password = "khade@123" };
+           // Arrange
+                        var user = new Login() { EmailId = "khadeeja@gmail.com", Password = "khade@123" };
             encrypt.Setup(method => method.EncodePasswordToBase64(user.Password)).Returns(user.Password);
 
             //Act

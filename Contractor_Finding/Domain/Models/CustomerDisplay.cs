@@ -8,7 +8,7 @@ namespace Domain.Models
 {
     public class CustomerDisplay
     {       
-            public double LandSqft { get; set; }
+            public double? LandSqft { get; set; }
 
             public string RegistrationNo { get; set; } = null!;
 
@@ -18,7 +18,7 @@ namespace Domain.Models
 
             public double? Longitude { get; set; }
 
-            public int Pincode { get; set; }
+            public int? Pincode { get; set; }
        
     }
 }
