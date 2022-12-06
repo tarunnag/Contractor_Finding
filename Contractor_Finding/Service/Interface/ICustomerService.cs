@@ -10,9 +10,9 @@ namespace Service.Interface
 {
     public interface ICustomerService
     {
-        string CreateCustomer(TbCustomer tbCustomer);
+        bool CreateCustomer(TbCustomer tbCustomer);
         List<CustomerDisplay> GetCustomerDetails();
-        string UpdateCustomerDetails(TbCustomer tbCustomer);
+        bool UpdateCustomerDetails(TbCustomer tbCustomer);
 
         bool DeleteCustomer(TbCustomer tbCustomer);
         public List<ContractorDisplay> SearchBypincode(int pincode);

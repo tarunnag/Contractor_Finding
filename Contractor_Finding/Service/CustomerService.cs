@@ -25,7 +25,7 @@ namespace Service
         }
 
         //create
-        public string CreateCustomer(TbCustomer tbCustomer)
+        public bool CreateCustomer(TbCustomer tbCustomer)
         {
             var registrationID = contractorFindingContext.TbCustomers.Where(r => r.RegistrationNo == tbCustomer.RegistrationNo).FirstOrDefault();
             if (registrationID == null && tbCustomer.LandSqft != null)
@@ -33,18 +33,18 @@ namespace Service
                 var ID = tbCustomer.RegistrationNo.Trim();
                 if (ID == string.Empty)
                 {
-                    return null;
+                    return false;
                 }
                 else
                 {
                     contractorFindingContext.TbCustomers.Add(tbCustomer);
                     contractorFindingContext.SaveChanges();
-                    return "Successfully Added";
+                    return true;
                 }
             }
             else
             {
-                return null;
+                return false;
             }
         }
 
@@ -68,7 +68,7 @@ namespace Service
         }
 
         //UPDATE
-        public string UpdateCustomerDetails(TbCustomer tbCustomer)
+        public bool UpdateCustomerDetails(TbCustomer tbCustomer)
         {
             {
                 var customer = contractorFindingContext.TbCustomers.Where(x => x.RegistrationNo == tbCustomer.RegistrationNo).FirstOrDefault();
@@ -80,16 +80,16 @@ namespace Service
                     customer.Longitude = tbCustomer.Longitude;
                     customer.Pincode = tbCustomer.Pincode;
                     customer.CustomerId= tbCustomer.CustomerId;
-                    if (customer.LandSqft != null && customer.RegistrationNo != null && customer.Pincode != null)
+                    if (customer.LandSqft != null&& customer.LandSqft!=0 && customer.RegistrationNo != null && customer.Pincode != null)
                     {
                         contractorFindingContext.SaveChanges();
-                        return "Successfully Updated!";
+                        return true;
                     }
-                    return null;
+                    return false;
                 }
                 else
                 {
-                    return null;
+                    return false;
                 }
 
             }
@@ -99,9 +99,13 @@ namespace Service
         public bool DeleteCustomer(TbCustomer tbCustomer)
         {
             TbCustomer customer = contractorFindingContext.TbCustomers.Where(c => c.RegistrationNo == tbCustomer.RegistrationNo).FirstOrDefault()!;
-            contractorFindingContext.TbCustomers.Remove(customer);
-            contractorFindingContext.SaveChanges();
-            return true;
+            if (customer != null)
+            {
+                contractorFindingContext.TbCustomers.Remove(customer);
+                contractorFindingContext.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         //send message

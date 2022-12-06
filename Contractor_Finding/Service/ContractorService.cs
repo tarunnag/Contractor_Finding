@@ -25,7 +25,7 @@ namespace Service
         }
 
         //create
-        public string CreateContractor(ContractorDetail contractorDetail)
+        public bool CreateContractor(ContractorDetail contractorDetail)
         {
             var id = contractorFindingContext.TbUsers.Where(u => u.UserId == contractorDetail.ContractorId).FirstOrDefault();
             var checklicense = contractorFindingContext.ContractorDetails.Where(u => u.License == contractorDetail.License).FirstOrDefault();
@@ -34,19 +34,19 @@ namespace Service
                 var license = contractorDetail.License.Trim();
                 if (license == string.Empty)
                 {
-                    return null;
+                    return false;
                    
                 }
                 else
                 {
                     contractorFindingContext.ContractorDetails.Add(contractorDetail);
                     contractorFindingContext.SaveChanges();
-                    return "Successful!";
+                    return true;
                 }
             }
             else
             {
-                return null;
+                return false;
             }
         }
 
@@ -79,7 +79,7 @@ namespace Service
         }
 
         //UPDATE
-        public string updateContractorDetails(ContractorDetail contractorDetail)
+        public bool updateContractorDetails(ContractorDetail contractorDetail)
         {
 
             var contractorobj = contractorFindingContext.ContractorDetails.Where(c => c.ContractorId == contractorDetail.ContractorId).FirstOrDefault();
@@ -98,16 +98,16 @@ namespace Service
                 if (contractorDetail.CompanyName != null && contractorDetail.Pincode != 0 && contractorDetail.ContractorId == contractorobj.ContractorId && contractorDetail.License == licensecon)
                 {
                     contractorFindingContext.SaveChanges();
-                    return "sucessfully Updated!";
+                    return true;
                 }
                 else
                 {
-                    return null;
+                    return false;
                 }
             }
             else
             {
-                return null;
+                return false;
             }
 
         }
@@ -115,10 +115,18 @@ namespace Service
         //DELETE
         public bool DeleteContractor(ContractorDetail contractorDetail)
         {
+
             ContractorDetail contractor = contractorFindingContext.ContractorDetails.Where(x => x.License == contractorDetail.License).FirstOrDefault()!;
-            contractorFindingContext.ContractorDetails.Remove(contractor);
-            contractorFindingContext.SaveChanges();
-            return true;
+            if (contractor != null)
+            {
+                contractorFindingContext.ContractorDetails.Remove(contractor);
+                contractorFindingContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

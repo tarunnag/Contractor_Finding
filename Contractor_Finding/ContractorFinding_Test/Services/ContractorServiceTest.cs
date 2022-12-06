@@ -29,7 +29,7 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = contractorService.CreateContractor(contractor);
-            var expected = "Successful!";
+            var expected = true;
 
             //Assert
             Assert.Equal(expected, result);
@@ -42,10 +42,10 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = contractorService.CreateContractor(contractor);
-            //var expected = "failed";
+            var expected = false;
 
             //Assert
-            Assert.Null(result);
+            Assert.Equal(result, expected);
         }
         [Fact]
         public void Get_All_Contractor()
@@ -69,7 +69,7 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = contractorService.updateContractorDetails(contractor);
-            var expected = "sucessfully Updated!";
+            var expected = true;
 
             //Assret
 
@@ -83,10 +83,11 @@ namespace ContractorFinding_Test.Services
             var contractor = new ContractorDetail() { ContractorId = 4, CompanyName = "ramtraders", Gender = 2, License = "KL-456789", Services = 1, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432, PhoneNumber = 9876543322 };
 
             //Act
-            var result = contractorService.updateContractorDetails(contractor);        
+            var result = contractorService.updateContractorDetails(contractor);
+            var expected = false;
 
             //Assert
-            Assert.Null(result);
+            Assert.Equal(result,expected);
 
         }
 
@@ -99,9 +100,10 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = contractorService.updateContractorDetails(contractor);
+            var excepted = false;
           
             //Assert
-            Assert.Null(result);
+            Assert.Equal(result,excepted);
 
         }
 
@@ -113,9 +115,10 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = contractorService.updateContractorDetails(contractor);
+            var excepted = false;
 
             //Assert
-            Assert.Null(result);
+            Assert.Equal(result,excepted);
 
         }
 
@@ -127,9 +130,10 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = contractorService.updateContractorDetails(contractor);
+            var excepted = false;
 
             //Assert
-            Assert.Null(result);
+            Assert.Equal(result,excepted);
 
         }
     }

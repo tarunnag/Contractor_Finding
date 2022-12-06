@@ -10,9 +10,9 @@ namespace Service.Interface
 {
     public interface IContractorService
     {
-        public string CreateContractor(ContractorDetail contractorDetail);
+        public bool CreateContractor(ContractorDetail contractorDetail);
         List<ContractorDisplay> GetContractorDetails();
-        public string updateContractorDetails(ContractorDetail contractorDetail);
+        public bool updateContractorDetails(ContractorDetail contractorDetail);
 
         public bool DeleteContractor(ContractorDetail contractorDetail);
 

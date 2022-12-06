@@ -58,10 +58,10 @@ namespace API.Controllers
             {
                 var userexist= userService.checkExistUser(registration);
 
-                if (userexist != null)
+                if (userexist == true)
                 {
                     var details = userService.Register(registration);
-                    if (details != null)
+                    if (details == true)
                     {
                         return new JsonResult(new CrudStatus() { Status = true, Message = "Registration Successful!" });
                     }
@@ -142,12 +142,12 @@ namespace API.Controllers
 
         //for forgot password
         [HttpPost("forgotpassword")]
-        public JsonResult ForgotPassword(Login login)
+        public JsonResult ForgotPassword(Registration login)
         {
             try
             {
                 var details = userService.forgotpassword(login);
-                if (details != null)
+                if (details == true)
                 {
                     return new JsonResult(new CrudStatus() { Status = true, Message = "Password Updated" });
                 }
@@ -178,6 +178,7 @@ namespace API.Controllers
                 return new JsonResult(ex.Message);
             }
         }
+      
 
     }
 }

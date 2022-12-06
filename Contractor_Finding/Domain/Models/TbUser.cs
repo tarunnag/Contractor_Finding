@@ -9,7 +9,7 @@ public partial class TbUser
 
     public int? TypeUser { get; set; }
 
-    public string FirstName { get; set; } = null!;
+    public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
 

@@ -30,7 +30,7 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = customerService.CreateCustomer(customer);
-            var expected = "Successfully Added";
+            var expected = true;
 
             //Assert
             Assert.Equal(expected, result);
@@ -43,9 +43,10 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = customerService.CreateCustomer(customer);
+            var excepted = false;
            
             //Assert
-            Assert.Null(result);
+            Assert.Equal(result, excepted);
         }
 
         [Fact]
@@ -71,7 +72,7 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = customerService.UpdateCustomerDetails(customer);
-            var expected = "Successfully Updated!";
+            var expected = true;
 
             //Assret
 
@@ -82,14 +83,15 @@ namespace ContractorFinding_Test.Services
         public void UpdateDetails_Test_With_WrongLandSqft()
         {
             //Arrange
-            var customer = new TbCustomer() { LandSqft = null, RegistrationNo = "1232334", BuildingType = 2, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432 };
-          
+            var customer = new TbCustomer() { LandSqft = 0, RegistrationNo = "1232334", BuildingType = 2, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432 };
+
 
             //Act
             var result = customerService.UpdateCustomerDetails(customer);
+            var expect = false;
 
             //Assert
-            Assert.Null(result);
+            Assert.Equal(result, expect);
 
         }
         [Fact]
@@ -101,9 +103,10 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = customerService.UpdateCustomerDetails(customer);
+            var expected = false;
 
             //Assert
-            Assert.Null(result);
+            Assert.Equal(result, expected);
 
         }
 
