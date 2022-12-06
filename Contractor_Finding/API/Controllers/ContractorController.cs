@@ -7,7 +7,7 @@ using Service.Interface;
 
 namespace API.Controllers
 {
-    //[Authorize(Policy = "contractor")]
+    [Authorize(Policy = "contractor")]
     [Route("api/[controller]")]
     [ApiController]
     public class ContractorController : ControllerBase
@@ -23,7 +23,7 @@ namespace API.Controllers
             this.contractorService = contractorService;
         }
 
-        [Authorize(Policy = "contractor")]
+        //[Authorize(Policy = "contractor")]
         //create
         [HttpPut]
         
@@ -44,7 +44,7 @@ namespace API.Controllers
             }
         }
 
-        [Authorize(Policy = "customer")]
+        //[Authorize(Policy = "customer")]
         //RETRIVE
         [HttpGet]
 
@@ -60,7 +60,7 @@ namespace API.Controllers
             }
         }
 
-        [Authorize(Policy = "contractor")]
+       // [Authorize(Policy = "contractor")]
         //UPDATE
         [HttpPost]
 
@@ -82,7 +82,7 @@ namespace API.Controllers
             }
         }
 
-        [Authorize(Policy = "contractor")]
+        //[Authorize(Policy = "contractor")]
         //DELETE
         [HttpDelete]
         public JsonResult DeleteContractor(ContractorDetail contractorDetail)

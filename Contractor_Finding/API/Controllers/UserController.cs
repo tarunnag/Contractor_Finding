@@ -85,7 +85,7 @@ namespace API.Controllers
 
         ////for user login //
         [HttpPost("login")]
-        public JsonResult LoginUser(Login login)
+        public JsonResult LoginUser(TbUser login)
         {
             try
             {
