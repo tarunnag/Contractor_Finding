@@ -20,12 +20,13 @@ namespace API.Controllers
     {
         private readonly ContractorFindingContext contractorFindingContext;
         private readonly IUserService userService;
-
+        private readonly IGenerateToken generateToken;
         //constructor
-        public UserController(ContractorFindingContext contractordemoContext, IUserService userService)
+        public UserController(ContractorFindingContext contractordemoContext, IUserService userService, IGenerateToken generateToken)
         {
             this.contractorFindingContext = contractordemoContext; 
             this.userService = userService;
+            this.generateToken = generateToken;
         }
      
 
@@ -114,12 +115,12 @@ namespace API.Controllers
 
             //string? refreshToken = tokenModel.RefreshToken;
 
-            var principal = userService.GetPrincipalFromExpiredToken(accessToken);
+            var principal = generateToken.GetPrincipalFromExpiredToken(accessToken);
             if (principal == null)
             {
                 return BadRequest("Invalid access token or refresh token");
             }
-            string? username = userService.ValidateJwtToken(accessToken);
+            string? username = generateToken.ValidateJwtToken(accessToken);
             TbUser user = userService.GetUserDetails().Where(x => x.EmailId == username).FirstOrDefault();
 
             if (user == null)
@@ -127,7 +128,7 @@ namespace API.Controllers
                 return BadRequest("Invalid access token or refresh token");
             }
 
-            string? newAccessToken = userService.GenerateToken(user);
+            string? newAccessToken = generateToken.GenerateNewToken(user);
 
             if (newAccessToken == null)
                 return Unauthorized();

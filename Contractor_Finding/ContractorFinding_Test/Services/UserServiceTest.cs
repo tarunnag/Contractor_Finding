@@ -25,13 +25,15 @@ namespace ContractorFinding_Test.Services
         UserService userService;
         Mock<IEncrypt> encrypt;
         Mock<IConfiguration> config;
+        Mock<IGenerateToken> generateToken;
 
         public UserServiceTest(DataFixture fixture)
         {
             _fixture = fixture;
             encrypt = new Mock<IEncrypt>();
             config = new Mock<IConfiguration>();
-            userService = new UserService(_fixture.context, encrypt.Object, config.Object);
+            generateToken = new Mock<IGenerateToken>();
+            userService = new UserService(_fixture.context, encrypt.Object, config.Object, generateToken.Object);
         }
 
         [Fact]

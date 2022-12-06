@@ -17,10 +17,8 @@ namespace Service.Interface
  
         string Login(Login login);
        
-        string GenerateToken(TbUser user);
         string forgotpassword(Login login);
         bool DeleteUser(TbUser user);
-        ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token);
-        string? ValidateJwtToken(string token);
+
     }
 }
