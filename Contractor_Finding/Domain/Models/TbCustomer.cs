@@ -5,7 +5,7 @@ namespace Domain;
 
 public partial class TbCustomer
 {
-    public double? LandSqft { get; set; }
+    public double LandSqft { get; set; }
 
     public string RegistrationNo { get; set; } = null!;
 
@@ -15,7 +15,7 @@ public partial class TbCustomer
 
     public double? Longitude { get; set; }
 
-    public int? Pincode { get; set; }
+    public int Pincode { get; set; }
 
     public int? CustomerId { get; set; }
 

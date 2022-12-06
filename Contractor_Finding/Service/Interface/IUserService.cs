@@ -12,13 +12,13 @@ namespace Service.Interface
     public interface IUserService
     {
         public List<UserDisplay> GetUserDetails();
-        string checkExistUser(TbUser tbUser);
-        string Register(Registration registration);
+        bool checkExistUser(TbUser tbUser);
+        bool Register(Registration registration);
  
         string Login(TbUser login);
        
-        string forgotpassword(Login login);
-        bool DeleteUser(TbUser user);
+        bool forgotpassword(Registration login);
+        public bool DeleteUser(TbUser user);
 
     }
 }

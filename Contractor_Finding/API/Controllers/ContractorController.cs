@@ -32,7 +32,7 @@ namespace API.Controllers
             try
             {
                 var contractor = contractorService.CreateContractor(contractorDetail);
-                if (contractor!= null)
+                if (contractor == true)
                 {
                     return new JsonResult(new CrudStatus() { Status = true, Message = "Successful!" });
                 }
@@ -69,7 +69,7 @@ namespace API.Controllers
             try
             {
                 var contractor = contractorService.updateContractorDetails(contractorDetail);
-                if (contractor != null && contractorDetail.License!=null)
+                if (contractor == true && contractorDetail.License!=null)
                 {
                     return new JsonResult(new CrudStatus() { Status = true, Message = "Successfully Updated" });
                 }

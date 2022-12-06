@@ -53,19 +53,19 @@ namespace Service
             return user;
         }
 
-        public string checkExistUser(TbUser tbUser)
+        public bool checkExistUser(TbUser tbUser)
         {
             var email = contractorFindingContext.TbUsers.Where(e => e.EmailId == tbUser.EmailId).FirstOrDefault();
             if (email == null)
             {
-                return "user doesnot exist";
+                return true;
             }
-            return "already exist";
+            return false;
         }
 
        
         //for Registration
-        public string Register(Registration registration)
+        public bool Register(Registration registration)
         {
 
             var email = contractorFindingContext.TbUsers.Where(e => e.EmailId == registration.EmailId).FirstOrDefault();
@@ -82,16 +82,16 @@ namespace Service
                 {
                     contractorFindingContext.TbUsers.Add(registration);
                     contractorFindingContext.SaveChanges();
-                    return "successfully registered";
+                    return true;
                 }
                 else
                 {
-                    return "registration failed";
+                    return false;
                 }
             }
             else
             {
-                return "registration failed";
+                return false;
             }
         }
       
@@ -100,8 +100,6 @@ namespace Service
         ////for Login
         public string Login(TbUser login)
         {
-
-            Encrypt decrypt = new Encrypt();
             string checkingpassword = encrypt.EncodePasswordToBase64(login.Password);
 
             var myUser = contractorFindingContext.TbUsers.
@@ -109,7 +107,8 @@ namespace Service
                 && u.Password == checkingpassword);
             if (myUser != null)
             {
-                var token = generateToken.GenerateNewToken(myUser);
+                login.TypeUser = myUser.TypeUser;
+                var token = generateToken.GenerateNewToken(login);
                 return token;
             }
             return null!;
@@ -120,30 +119,30 @@ namespace Service
      
 
         //for forgotpassword case
-        public string forgotpassword(Login login)
+        public bool forgotpassword(Registration login)
         {
 
             var userWithSameEmail = contractorFindingContext.TbUsers.Where(m => m.EmailId == login.EmailId).SingleOrDefault();
             if (userWithSameEmail == null)
             {
-                return "Updation Failed";
+                return false;
             }
             else
             {
 
                 string encrptnewpassword = encrypt.EncodePasswordToBase64(login.Password);
-                string encrptconfirmpassword = encrypt.EncodePasswordToBase64(login.confirmPassword);
+                string encrptconfirmpassword = encrypt.EncodePasswordToBase64(login.confirmationPassword);
                 if (encrptnewpassword == encrptconfirmpassword)
                 {
                     userWithSameEmail.Password = encrptconfirmpassword;
                     userWithSameEmail.UpdatedDate = DateTime.Now;
                     contractorFindingContext.Entry(userWithSameEmail).State = EntityState.Modified;
                     contractorFindingContext.SaveChanges();
-                    return "Successful!";
+                    return true;
                 }
                 else
                 {
-                    return "Updation Failed";
+                    return false;
                 }
 
             }
@@ -152,10 +151,15 @@ namespace Service
         //for delete deatils
         public bool DeleteUser(TbUser user)
         {
-            contractorFindingContext.TbUsers.Remove(user);
-            contractorFindingContext.SaveChanges();
-            return true;
+            var checkid = contractorFindingContext.TbUsers.Where(x => x.UserId == user.UserId).FirstOrDefault();
+            if (checkid != null)
+            {
+                contractorFindingContext.TbUsers.Remove(user);
+                contractorFindingContext.SaveChanges();
+                return true;
+            }
+            return false;
         }
-
+        
     }
 }
