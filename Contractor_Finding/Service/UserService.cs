@@ -20,13 +20,13 @@ namespace Service
     {
         private readonly ContractorFindingContext contractorFindingContext;
         private readonly IEncrypt encrypt;
-        private readonly IConfiguration _config;
+      
         private readonly IGenerateToken generateToken;
-        public UserService(ContractorFindingContext contractorFindingContext, IEncrypt encrypt, IConfiguration config, IGenerateToken generateToken)
+        public UserService(ContractorFindingContext contractorFindingContext, IEncrypt encrypt, IGenerateToken generateToken)
         {
             this.contractorFindingContext = contractorFindingContext;
             this.encrypt = encrypt;
-            _config = config;
+        
             this.generateToken = generateToken;
         }
 
@@ -98,7 +98,7 @@ namespace Service
 
       
         ////for Login
-        public string Login(Login login)
+        public string Login(TbUser login)
         {
 
             Encrypt decrypt = new Encrypt();

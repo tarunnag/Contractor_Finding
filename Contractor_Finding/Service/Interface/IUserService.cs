@@ -15,7 +15,7 @@ namespace Service.Interface
         string checkExistUser(TbUser tbUser);
         string Register(Registration registration);
  
-        string Login(Login login);
+        string Login(TbUser login);
        
         string forgotpassword(Login login);
         bool DeleteUser(TbUser user);
