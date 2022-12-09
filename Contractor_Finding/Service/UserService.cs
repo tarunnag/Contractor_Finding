@@ -84,21 +84,15 @@ namespace Service
                     contractorFindingContext.SaveChanges();
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
                 return false;
             }
+            return false;
         }
       
 
       
         ////for Login
-        public string Login(TbUser login)
+        public Tuple<string,int> Login(TbUser login)
         {
             string checkingpassword = encrypt.EncodePasswordToBase64(login.Password);
 
@@ -109,11 +103,10 @@ namespace Service
             {
                 login.TypeUser = myUser.TypeUser;
                 var token = generateToken.GenerateNewToken(login);
-                return token;
+                Tuple<string, int> myid = new Tuple<string, int>(token, myUser.UserId);
+                return myid;
             }
             return null!;
-
-
         }
 
      
@@ -123,13 +116,8 @@ namespace Service
         {
 
             var userWithSameEmail = contractorFindingContext.TbUsers.Where(m => m.EmailId == login.EmailId).SingleOrDefault();
-            if (userWithSameEmail == null)
+            if (userWithSameEmail != null)
             {
-                return false;
-            }
-            else
-            {
-
                 string encrptnewpassword = encrypt.EncodePasswordToBase64(login.Password);
                 string encrptconfirmpassword = encrypt.EncodePasswordToBase64(login.confirmationPassword);
                 if (encrptnewpassword == encrptconfirmpassword)
@@ -140,12 +128,10 @@ namespace Service
                     contractorFindingContext.SaveChanges();
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
-
+                return false;
             }
+            return false;
+            
         }
 
         //for delete deatils

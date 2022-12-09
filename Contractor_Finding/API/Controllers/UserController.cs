@@ -16,15 +16,16 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
         private readonly ContractorFindingContext contractorFindingContext;
         private readonly IUserService userService;
         private readonly IGenerateToken generateToken;
+        private const string Sessionkey = "UserId";
+
         //constructor
-        public UserController(ContractorFindingContext contractordemoContext, IUserService userService, IGenerateToken generateToken)
+        public UserController(ContractorFindingContext contractordemoContext, IUserService userService, IGenerateToken generateToken):base(contractordemoContext)
         {
-            this.contractorFindingContext = contractordemoContext; 
             this.userService = userService;
             this.generateToken = generateToken;
         }
@@ -36,10 +37,9 @@ namespace API.Controllers
         [Authorize]
         public JsonResult Getuserdetails()
         {
+            loginID(Sessionkey);
             try
             {
-                //var details = userService.GetUserDetails();
-                //return new JsonResult(details);
                 return new JsonResult(userService.GetUserDetails().ToList());
             }
             catch (Exception ex)
@@ -65,16 +65,9 @@ namespace API.Controllers
                     {
                         return new JsonResult(new CrudStatus() { Status = true, Message = "Registration Successful!" });
                     }
-                    else
-                    {
-                        return new JsonResult(new CrudStatus() { Status = false, Message = "registration failed" });
-                    }
+                    return new JsonResult(new CrudStatus() { Status = false, Message = "registration failed" });
                 }
-                else
-                {
-                    return new JsonResult(new CrudStatus() { Status = false, Message = "Mail ID is already existing" });
-                }
-
+                return new JsonResult(new CrudStatus() { Status = false, Message = "Mail ID is already existing" });
             }
             catch (Exception ex)
             {
@@ -92,10 +85,11 @@ namespace API.Controllers
                 var details = userService.Login(login);
                 if (details != null)
                 {
-                    return new JsonResult(new CrudStatus() { Status = true, Message = details });
+                    HttpContext.Session.SetInt32(Sessionkey, details.Item2);
+                    loginID(Sessionkey);
+                    return new JsonResult(new CrudStatus() { Status = true, Message = details.Item1 });
                 }
                 return new JsonResult(new CrudStatus() { Status = false, Message = "LoginFailed" });
-
             }
             catch (Exception ex)
             {
@@ -134,8 +128,6 @@ namespace API.Controllers
                 return Unauthorized();
             else
                 return Ok(newAccessToken);
-
-
         }
 
 

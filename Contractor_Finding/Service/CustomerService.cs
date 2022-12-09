@@ -31,21 +31,15 @@ namespace Service
             if (registrationID == null && tbCustomer.LandSqft != null)
             {
                 var ID = tbCustomer.RegistrationNo.Trim();
-                if (ID == string.Empty)
-                {
-                    return false;
-                }
-                else
+                if (ID != string.Empty)
                 {
                     contractorFindingContext.TbCustomers.Add(tbCustomer);
                     contractorFindingContext.SaveChanges();
                     return true;
                 }
-            }
-            else
-            {
                 return false;
             }
+            return false;
         }
 
         //RETRIEVE
@@ -87,11 +81,7 @@ namespace Service
                     }
                     return false;
                 }
-                else
-                {
-                    return false;
-                }
-
+                return false;
             }
         }
 
@@ -121,10 +111,7 @@ namespace Service
                 sms.SendMessageToContractor(message2, phonenumber);
                 return "Message sended";
             }
-            else
-            {
-                return "failed";
-            }
+            return "failed";
         }
 
         //search

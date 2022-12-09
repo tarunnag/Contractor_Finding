@@ -32,22 +32,15 @@ namespace Service
             if (id != null && checklicense == null)
             {
                 var license = contractorDetail.License.Trim();
-                if (license == string.Empty)
-                {
-                    return false;
-                   
-                }
-                else
+                if (license != string.Empty)
                 {
                     contractorFindingContext.ContractorDetails.Add(contractorDetail);
                     contractorFindingContext.SaveChanges();
                     return true;
                 }
-            }
-            else
-            {
                 return false;
             }
+            return false;
         }
 
         //RETRIEVE
@@ -87,7 +80,6 @@ namespace Service
             var licensecon = contractorobj.License;
             if (contractorobj != null && licenseobj != null)
             {
-
                 contractorobj.CompanyName = contractorDetail.CompanyName;
                 contractorobj.Gender = contractorDetail?.Gender;
                 contractorobj.Services = contractorDetail?.Services;
@@ -100,16 +92,9 @@ namespace Service
                     contractorFindingContext.SaveChanges();
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
                 return false;
             }
-
+            return false;
         }
 
         //DELETE
@@ -123,10 +108,7 @@ namespace Service
                 contractorFindingContext.SaveChanges();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 }

@@ -10,16 +10,15 @@ namespace API.Controllers
     [Authorize(Policy = "contractor")]
     [Route("api/[controller]")]
     [ApiController]
-    public class ContractorController : ControllerBase
+    public class ContractorController : BaseController
     {
         private readonly ContractorFindingContext contractorFindingContext;
         private readonly IContractorService contractorService;
-
+        private const string Sessionkey = "UserId";
 
         //Constructor
-        public ContractorController(ContractorFindingContext contractorFindingContext, IContractorService contractorService)
+        public ContractorController(ContractorFindingContext contractorFindingContext, IContractorService contractorService):base(contractorFindingContext)
         {
-            this.contractorFindingContext = contractorFindingContext;
             this.contractorService = contractorService;
         }
 
@@ -73,7 +72,6 @@ namespace API.Controllers
                 {
                     return new JsonResult(new CrudStatus() { Status = true, Message = "Successfully Updated" });
                 }
-                else
                 return new JsonResult(new CrudStatus() { Status = false, Message = "Updation Failed" });
             }
             catch (Exception ex)
