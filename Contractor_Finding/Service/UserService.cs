@@ -63,13 +63,12 @@ namespace Service
             return false;
         }
 
-       
+
         //for Registration
         public bool Register(Registration registration)
         {
-
-            var email = contractorFindingContext.TbUsers.Where(e => e.EmailId == registration.EmailId).FirstOrDefault();
-            if (email == null)
+            bool check = checkExistUser(registration);
+            if (check == true)
             {
                 string encryptedPassword = encrypt.EncodePasswordToBase64(registration.Password);
                 registration.CreatedDate = DateTime.Now;
