@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
@@ -26,6 +27,8 @@ builder.Services.AddScoped<IEncrypt, Encrypt>();
 builder.Services.AddScoped<IContractorService, ContractorService>();
 builder.Services.AddScoped<IGenerateToken, GenerateToken>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddDistributedMemoryCache();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -64,6 +67,15 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("customer",
          policy => policy.RequireRole("customer"));
 });
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+
+
 
 var app = builder.Build();
 
@@ -79,6 +91,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllers();
 

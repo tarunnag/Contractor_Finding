@@ -11,15 +11,14 @@ namespace API.Controllers
     [Authorize(Policy = "customer")]
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomerController : BaseController
     {
         private readonly ContractorFindingContext contractorFindingContext;
         private readonly ICustomerService customerService;
-
+        private const string Sessionkey = "UserId";
         //Constructor 
-        public CustomerController(ContractorFindingContext contractorFindingContext, ICustomerService customerService)
+        public CustomerController(ContractorFindingContext contractorFindingContext, ICustomerService customerService):base(contractorFindingContext)
         {
-            this.contractorFindingContext = contractorFindingContext;
             this.customerService = customerService;
         }
 
@@ -34,10 +33,7 @@ namespace API.Controllers
                 {
                     return new JsonResult(new CrudStatus() { Status = true, Message = "Added Successful!" });
                 }
-                else
-                {
-                    return new JsonResult(new CrudStatus() { Status = false, Message = "Failed" });
-                }
+                return new JsonResult(new CrudStatus() { Status = false, Message = "Failed" });
             }
             catch (Exception ex)
             {
@@ -70,8 +66,7 @@ namespace API.Controllers
                 {
                     return new JsonResult(new CrudStatus() { Status = true, Message = "Successfully Updated" });
                 }
-                else
-                    return new JsonResult(new CrudStatus() { Status = false, Message = "Updation Failed" });
+                return new JsonResult(new CrudStatus() { Status = false, Message = "Updation Failed" });
             }
             catch (Exception ex)
             {
@@ -118,7 +113,6 @@ namespace API.Controllers
         {
             try
             {
-
                 return new JsonResult(customerService.SendMessage(phonenumber, registration, id));
             }
             catch (Exception ex)
