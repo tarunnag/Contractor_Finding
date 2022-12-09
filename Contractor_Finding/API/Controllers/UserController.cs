@@ -56,18 +56,12 @@ namespace API.Controllers
 
             try
             {
-                var userexist= userService.checkExistUser(registration);
-
-                if (userexist == true)
-                {
                     var details = userService.Register(registration);
                     if (details == true)
                     {
                         return new JsonResult(new CrudStatus() { Status = true, Message = "Registration Successful!" });
                     }
                     return new JsonResult(new CrudStatus() { Status = false, Message = "registration failed" });
-                }
-                return new JsonResult(new CrudStatus() { Status = false, Message = "Mail ID is already existing" });
             }
             catch (Exception ex)
             {
