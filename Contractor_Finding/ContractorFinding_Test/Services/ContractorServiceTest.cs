@@ -51,7 +51,7 @@ namespace ContractorFinding_Test.Services
         public void Get_All_Contractor()
         {
             //Arrange
-            Pagination pageParams = new Pagination() { PageSize = 2, PageNumber = 1, OrderBy = "RegistrationNo" };
+            Pagination pageParams = new Pagination() { PageSize = 3, PageNumber = 1, OrderBy = "RegistrationNo" };
             //Act
             var result = contractorService.GetContractorDetails(pageParams);
 
