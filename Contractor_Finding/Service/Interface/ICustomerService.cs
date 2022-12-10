@@ -11,11 +11,11 @@ namespace Service.Interface
     public interface ICustomerService
     {
         bool CreateCustomer(TbCustomer tbCustomer);
-        List<CustomerDisplay> GetCustomerDetails();
+        List<CustomerDisplay> GetCustomerDetails(Pagination pageParams);
         bool UpdateCustomerDetails(TbCustomer tbCustomer);
 
         bool DeleteCustomer(TbCustomer tbCustomer);
-        public List<ContractorDisplay> SearchBypincode(int pincode);
+        public List<ContractorDisplay> SearchBypincode(int pincode, Pagination pageParams);
         string SendMessage(long phonenumber, string reggistration, int id);
     }
 }

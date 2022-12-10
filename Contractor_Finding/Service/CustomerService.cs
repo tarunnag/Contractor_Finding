@@ -49,7 +49,7 @@ namespace Service
         }
 
         //RETRIEVE
-        public List<CustomerDisplay> GetCustomerDetails()
+        public List<CustomerDisplay> GetCustomerDetails(Pagination pageParams)
         {
             List<CustomerDisplay> customers = (from c in contractorFindingContext.TbCustomers
                                                join b in contractorFindingContext.TbBuildings on
@@ -64,6 +64,32 @@ namespace Service
                                                    Pincode = c.Pincode,
 
                                                }).ToList();
+            switch (pageParams.OrderBy)
+            {
+                case "LandSqft":
+                    customers = customers.OrderBy(on => on.LandSqft).ToList();
+                    break;
+                case "RegistrationNo":
+                    customers = customers.OrderBy(on => on.RegistrationNo).ToList();
+                    break;
+                case "BuildingType":
+                    customers = customers.OrderBy(on => on.BuildingType).ToList();
+                    break;
+                case "Lattitude":
+                    customers = customers.OrderBy(on => on.Lattitude).ToList();
+                    break;
+                case "Longitude":
+                    customers = customers.OrderBy(on => on.Longitude).ToList();
+                    break;
+                case "Pincode":
+                    customers = customers.OrderBy(on => on.Pincode).ToList();
+                    break;
+                default:
+                    customers = customers.OrderBy(on => on.RegistrationNo).ToList();
+                    break;
+            }
+            customers = customers.Skip((pageParams.PageNumber - 1) * pageParams.PageSize)
+                                                .Take(pageParams.PageSize).ToList();
             return customers;
         }
 
@@ -128,9 +154,9 @@ namespace Service
         }
 
         //search
-        public List<ContractorDisplay> SearchBypincode(int pincode)
+        public List<ContractorDisplay> SearchBypincode(int pincode, Pagination pageParams)
         {
-            return _contractorservice.GetContractorDetails().Where(x => x.Pincode == pincode).ToList();
+            return _contractorservice.GetContractorDetails(pageParams).Where(x => x.Pincode == pincode).ToList();
         }
     }
 }
