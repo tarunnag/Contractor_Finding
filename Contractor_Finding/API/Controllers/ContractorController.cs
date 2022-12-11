@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -47,11 +48,11 @@ namespace API.Controllers
         //RETRIVE
         [HttpGet]
 
-        public JsonResult GetContractorDetails()
+        public JsonResult GetContractorDetails([FromQuery] Pagination pageParams)
         {
             try
             {
-                return new JsonResult(contractorService.GetContractorDetails().ToList());
+                return new JsonResult(contractorService.GetContractorDetails(pageParams).ToList());
             }
             catch (Exception ex)
             {

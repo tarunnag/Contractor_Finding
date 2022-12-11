@@ -44,7 +44,7 @@ namespace Service
         }
 
         //RETRIEVE
-        public List<ContractorDisplay> GetContractorDetails()
+        public List<ContractorDisplay> GetContractorDetails(Pagination pageParams)
         {
             List<ContractorDisplay> contractors = (from c in contractorFindingContext.ContractorDetails
                                                    join g in contractorFindingContext.TbGenders on
@@ -68,6 +68,50 @@ namespace Service
                                                        EmailId = user.EmailId,
                                                        PhoneNumber = c.PhoneNumber
                                                    }).ToList();
+            switch (pageParams.OrderBy)
+            {
+                case "CompanyName":
+                    contractors = contractors.OrderBy(on => on.CompanyName).ToList();
+                    break;
+                case "ContractorId":
+                    contractors = contractors.OrderBy(on => on.ContractorId).ToList();
+                    break;
+                case "Gender":
+                    contractors = contractors.OrderBy(on => on.Gender).ToList();
+                    break;
+                case "License":
+                    contractors = contractors.OrderBy(on => on.License).ToList();
+                    break;
+                case "Services":
+                    contractors = contractors.OrderBy(on => on.Services).ToList();
+                    break;
+                case "Lattitude":
+                    contractors = contractors.OrderBy(on => on.Lattitude).ToList();
+                    break;
+                case "Longitude":
+                    contractors = contractors.OrderBy(on => on.Longitude).ToList();
+                    break;
+                case "Pincode":
+                    contractors = contractors.OrderBy(on => on.Pincode).ToList();
+                    break;
+                case "FirstName":
+                    contractors = contractors.OrderBy(on => on.FirstName).ToList();
+                    break;
+                case "LastName":
+                    contractors = contractors.OrderBy(on => on.LastName).ToList();
+                    break;
+                case "EmailId":
+                    contractors = contractors.OrderBy(on => on.EmailId).ToList();
+                    break;
+                case "PhoneNumber":
+                    contractors = contractors.OrderBy(on => on.PhoneNumber).ToList();
+                    break;
+                default:
+                    contractors = contractors.OrderBy(on => on.ContractorId).ToList();
+                    break;
+            }
+            contractors = contractors.Skip((pageParams.PageNumber - 1) * pageParams.PageSize)
+                                                .Take(pageParams.PageSize).ToList();
             return contractors;
         }
 

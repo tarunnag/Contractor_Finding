@@ -1,7 +1,9 @@
 ﻿using Domain;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Service;
 using Service.Interface;
@@ -43,11 +45,11 @@ namespace API.Controllers
 
         //RETRIEVE
         [HttpGet]
-        public JsonResult GetCustomerDetails()
+        public JsonResult GetCustomerDetails([FromQuery] Pagination pageParams)
         {
             try
             {
-                return new JsonResult(customerService.GetCustomerDetails().ToList());
+                return new JsonResult(customerService.GetCustomerDetails(pageParams).ToList());
             }
             catch (Exception ex)
             {
@@ -95,11 +97,11 @@ namespace API.Controllers
 
         //SerachingContractor
         [HttpGet("Pincode")]
-        public JsonResult SearchBypincode(int pin)
+        public JsonResult SearchBypincode(int pin, Pagination pageParams)
         {
             try
             {
-                return new JsonResult(customerService.SearchBypincode(pin).ToList());
+                return new JsonResult(customerService.SearchBypincode(pin, pageParams).ToList());
             }
             catch (Exception ex)
             {
