@@ -53,9 +53,9 @@ namespace ContractorFinding_Test.Services
         public void Get_All_Customer()
         {
             //Arrange
-
+            Pagination pageParams = new Pagination() { PageSize=2, PageNumber=1,OrderBy= "RegistrationNo" };
             //Act
-            var result = customerService.GetCustomerDetails();
+            var result = customerService.GetCustomerDetails(pageParams);
 
             //Assert
             var expect = _fixture.context.TbCustomers.Count();

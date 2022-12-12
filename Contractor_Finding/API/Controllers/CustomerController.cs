@@ -1,7 +1,9 @@
-﻿using Domain;
+using Domain;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Service;
 using Service.Interface;
@@ -48,6 +50,7 @@ namespace API.Controllers
             try
             {
                 return Ok(customerService.GetCustomerDetails().ToList());
+
             }
             catch (Exception ex)
             {
@@ -100,6 +103,7 @@ namespace API.Controllers
             try
             {
                 return Ok(customerService.SearchBypincode(pin).ToList());
+
             }
             catch (Exception ex)
             {

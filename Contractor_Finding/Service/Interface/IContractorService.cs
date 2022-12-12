@@ -11,7 +11,7 @@ namespace Service.Interface
     public interface IContractorService
     {
         public bool CreateContractor(ContractorDetail contractorDetail);
-        List<ContractorDisplay> GetContractorDetails();
+        List<ContractorDisplay> GetContractorDetails(Pagination pageParams);
         public bool updateContractorDetails(ContractorDetail contractorDetail);
 
         public bool DeleteContractor(ContractorDetail contractorDetail);

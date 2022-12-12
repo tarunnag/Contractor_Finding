@@ -1,4 +1,4 @@
-﻿using Domain;
+using Domain;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -48,12 +48,12 @@ namespace API.Controllers
         //[Authorize(Policy = "customer")]
         //RETRIVE
         [HttpGet]
-
         public ActionResult<List<ContractorDisplay>> GetContractorDetails()
         {
             try
             {
                 return Ok(contractorService.GetContractorDetails().ToList());
+
             }
             catch (Exception ex)
             {
