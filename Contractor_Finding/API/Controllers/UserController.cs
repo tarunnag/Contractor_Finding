@@ -35,23 +35,23 @@ namespace API.Controllers
         // GET: api/<ContractorController>
         [HttpGet]
         [Authorize]
-        public JsonResult Getuserdetails()
+        public ActionResult Getuserdetails()
         {
             loginID(Sessionkey);
             try
             {
-                return new JsonResult(userService.GetUserDetails().ToList());
+                return Ok (userService.GetUserDetails().ToList());
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return NotFound(ex.Message);
             }
         }
 
         //for user registration
         // POST api/<ContractorController>
         [HttpPut]
-        public JsonResult RegisterUser(Registration registration)
+        public IActionResult RegisterUser(Registration registration)
         {
 
             try
@@ -59,20 +59,20 @@ namespace API.Controllers
                     var details = userService.Register(registration);
                     if (details == true)
                     {
-                        return new JsonResult(new CrudStatus() { Status = true, Message = "Registration Successful!" });
+                        return Ok(new CrudStatus() { Status = true, Message = "Registration Successful!" });
                     }
-                    return new JsonResult(new CrudStatus() { Status = false, Message = "registration failed" });
+                    return Ok(new CrudStatus() { Status = false, Message = "registration failed" });
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return BadRequest(ex.Message);
             }
             
         }
 
         ////for user login //
         [HttpPost("login")]
-        public JsonResult LoginUser(TbUser login)
+        public IActionResult LoginUser(TbUser login)
         {
             try
             {
@@ -81,13 +81,13 @@ namespace API.Controllers
                 {
                     HttpContext.Session.SetInt32(Sessionkey, details.Item2);
                     loginID(Sessionkey);
-                    return new JsonResult(new CrudStatus() { Status = true, Message = details.Item1 });
+                    return Ok(new CrudStatus() { Status = true, Message = details.Item1 });
                 }
-                return new JsonResult(new CrudStatus() { Status = false, Message = "LoginFailed" });
+                return Ok(new CrudStatus() { Status = false, Message = "LoginFailed" });
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
         //Refresh Token
@@ -128,40 +128,40 @@ namespace API.Controllers
 
         //for forgot password
         [HttpPost("forgotpassword")]
-        public JsonResult ForgotPassword(Registration login)
+        public IActionResult ForgotPassword(Registration login)
         {
             try
             {
                 var details = userService.forgotpassword(login);
                 if (details == true)
                 {
-                    return new JsonResult(new CrudStatus() { Status = true, Message = "Password Updated" });
+                    return Ok(new CrudStatus() { Status = true, Message = "Password Updated" });
                 }
-                return new JsonResult(new CrudStatus() { Status = false, Message = "Not Updated" });             
+                return Ok(new CrudStatus() { Status = false, Message = "Not Updated" });             
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
         
 
         // for DELETE 
         [HttpDelete]
-        public JsonResult Delete(TbUser user)
+        public IActionResult Delete(TbUser user)
         {
             try
             {
                 var details = userService.DeleteUser(user);
                 if (details == true)
                 {
-                    return new JsonResult(new CrudStatus() { Status = true, Message = "Deleted successful!" });
+                    return Ok(new CrudStatus() { Status = true, Message = "Deleted successful!" });
                 }
-                return new JsonResult(new CrudStatus() { Status = false });
+                return Ok(new CrudStatus() { Status = false });
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
       

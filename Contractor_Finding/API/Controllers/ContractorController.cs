@@ -1,10 +1,11 @@
-﻿using Domain;
+using Domain;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
 using Service.Interface;
+using Twilio.TwiML.Voice;
 
 namespace API.Controllers
 {
@@ -27,36 +28,36 @@ namespace API.Controllers
         //create
         [HttpPut]
         
-        public JsonResult CreateContractor(ContractorDetail contractorDetail)
+        public IActionResult CreateContractor(ContractorDetail contractorDetail)
         {
             try
             {
                 var contractor = contractorService.CreateContractor(contractorDetail);
                 if (contractor == true)
                 {
-                    return new JsonResult(new CrudStatus() { Status = true, Message = "Successful!" });
+                    return Ok(new CrudStatus() { Status = true, Message = "Successful!" });
                 }
-                return new JsonResult(new CrudStatus() { Status = false, Message = "Failed" });
+                return Ok(new CrudStatus() { Status = false, Message = "Failed" });
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
         //[Authorize(Policy = "customer")]
         //RETRIVE
         [HttpGet]
-
-        public JsonResult GetContractorDetails([FromQuery] Pagination pageParams)
+        public ActionResult<List<ContractorDisplay>> GetContractorDetails()
         {
             try
             {
-                return new JsonResult(contractorService.GetContractorDetails(pageParams).ToList());
+                return Ok(contractorService.GetContractorDetails().ToList());
+
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return NotFound(ex.Message);
             }
         }
 
@@ -64,40 +65,40 @@ namespace API.Controllers
         //UPDATE
         [HttpPost]
 
-        public JsonResult UpdateContractor(ContractorDetail contractorDetail)
+        public IActionResult UpdateContractor(ContractorDetail contractorDetail)
         {
             try
             {
                 var contractor = contractorService.updateContractorDetails(contractorDetail);
                 if (contractor == true && contractorDetail.License!=null)
                 {
-                    return new JsonResult(new CrudStatus() { Status = true, Message = "Successfully Updated" });
+                    return Ok(new CrudStatus() { Status = true, Message = "Successfully Updated" });
                 }
-                return new JsonResult(new CrudStatus() { Status = false, Message = "Updation Failed" });
+                return Ok(new CrudStatus() { Status = false, Message = "Updation Failed" });
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
         //[Authorize(Policy = "contractor")]
         //DELETE
         [HttpDelete]
-        public JsonResult DeleteContractor(ContractorDetail contractorDetail)
+        public IActionResult DeleteContractor(ContractorDetail contractorDetail)
         {
             try
             {
                 var contractor = contractorService.DeleteContractor(contractorDetail);
                 if (contractor == true)
                 {
-                    return new JsonResult(new CrudStatus() { Status = true, Message = "Deleted successful!" });
+                    return Ok(new CrudStatus() { Status = true, Message = "Deleted successful!" });
                 }
-                return new JsonResult(new CrudStatus() { Status = false });
+                return Ok(new CrudStatus() { Status = false });
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
     }
