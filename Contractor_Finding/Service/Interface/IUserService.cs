@@ -19,6 +19,7 @@ namespace Service.Interface
        
         bool forgotpassword(Registration login);
         public bool DeleteUser(TbUser user);
+        public List<Userview> GetUsers();
 
     }
 }
