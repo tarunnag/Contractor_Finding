@@ -56,11 +56,13 @@ namespace Service
         public bool checkExistUser(TbUser tbUser)
         {
             var email = contractorFindingContext.TbUsers.Where(e => e.EmailId == tbUser.EmailId).FirstOrDefault();
-            if (email == null)
-            {
-                return true;
-            }
-            return false;
+            return email == null;
+
+            //if (email == null)
+            //{
+            //    return true;
+            //}
+            //return false;
         }
 
 
@@ -145,6 +147,11 @@ namespace Service
             }
             return false;
         }
-        
+
+        public List<Userview> GetUsers()
+        {
+            List<Userview> users = contractorFindingContext.Userviews.ToList();
+            return users;
+        }
     }
 }

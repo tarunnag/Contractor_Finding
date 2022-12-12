@@ -1,4 +1,6 @@
-﻿using Domain;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Domain;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -6,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
+using Repository;
 using Service;
 using Service.Interface;
 using System.IdentityModel.Tokens.Jwt;
@@ -22,14 +25,17 @@ namespace API.Controllers
         private readonly IUserService userService;
         private readonly IGenerateToken generateToken;
         private const string Sessionkey = "UserId";
+        private readonly IMapper _mapper;
 
         //constructor
-        public UserController(ContractorFindingContext contractordemoContext, IUserService userService, IGenerateToken generateToken):base(contractordemoContext)
+        public UserController(ContractorFindingContext contractordemoContext, IUserService userService, IMapper mapper, IGenerateToken generateToken):base(contractordemoContext)
         {
             this.userService = userService;
             this.generateToken = generateToken;
+            _mapper=mapper;
+
         }
-     
+
 
         //for get user details
         // GET: api/<ContractorController>
@@ -46,6 +52,37 @@ namespace API.Controllers
             {
                 return NotFound(ex.Message);
             }
+        }
+
+        //For Versioning
+        [HttpGet]
+        [MapToApiVersion("2")]
+        [Route("V2")]
+        public ActionResult<List<UserDisplayV2>> GetUsers2()
+        {
+            var users = userService.GetUsers().Select(a => _mapper.Map<UserDisplayV2>(a));
+            return Ok(users);
+        }
+
+        [HttpGet]
+        [MapToApiVersion("3")]
+        [Route("V3")]
+        public JsonResult GetUsers3()
+        {
+            var user = new MapperConfiguration(cfg => cfg.CreateProjection<TbUser, UserDisplayV2>()
+            .ForMember(dto => dto.Usertype, conf =>
+             conf.MapFrom(ol => ol.TypeUserNavigation.Usertype1)));
+            return new JsonResult(contractorFindingContext.TbUsers.ProjectTo<UserDisplayV2>(user).ToList());
+        }
+
+        [HttpGet]
+        [MapToApiVersion("4")]
+        [Route("V4")]
+        public List<UserDisplayV2> GetUsers4()
+        {
+            List<UserDisplayV2> users = AutoMapper<Userview, UserDisplayV2>.Maplist(userService.GetUsers());
+            return users;
+
         }
 
         //for user registration

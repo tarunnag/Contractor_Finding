@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\
 		{A551C2C9-B9B4-47A6-A907-B4D0911F6948} = {A551C2C9-B9B4-47A6-A907-B4D0911F6948}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractorFinding_Test", "ContractorFinding_Test\ContractorFinding_Test.csproj", "{4A759A18-FB17-492F-8614-42D713653774}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractorFinding_Test", "ContractorFinding_Test\ContractorFinding_Test.csproj", "{4A759A18-FB17-492F-8614-42D713653774}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{063D35FA-021C-4E94-B47D-5AF70664C6F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{4A759A18-FB17-492F-8614-42D713653774}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A759A18-FB17-492F-8614-42D713653774}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A759A18-FB17-492F-8614-42D713653774}.Release|Any CPU.Build.0 = Release|Any CPU
+		{063D35FA-021C-4E94-B47D-5AF70664C6F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{063D35FA-021C-4E94-B47D-5AF70664C6F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{063D35FA-021C-4E94-B47D-5AF70664C6F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{063D35FA-021C-4E94-B47D-5AF70664C6F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
