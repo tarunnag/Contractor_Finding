@@ -24,100 +24,100 @@ namespace API.Controllers
 
         //create
         [HttpPut]
-        public JsonResult CreateContractor(TbCustomer tbCustomer)
+        public IActionResult CreateContractor(TbCustomer tbCustomer)
         {
             try
             {
                 var customer = customerService.CreateCustomer(tbCustomer);
                 if (customer == true)
                 {
-                    return new JsonResult(new CrudStatus() { Status = true, Message = "Added Successful!" });
+                    return Ok(new CrudStatus() { Status = true, Message = "Added Successful!" });
                 }
-                return new JsonResult(new CrudStatus() { Status = false, Message = "Failed" });
+                return Ok(new CrudStatus() { Status = false, Message = "Failed" });
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
         //RETRIEVE
         [HttpGet]
-        public JsonResult GetCustomerDetails()
+        public ActionResult GetCustomerDetails()
         {
             try
             {
-                return new JsonResult(customerService.GetCustomerDetails().ToList());
+                return Ok(customerService.GetCustomerDetails().ToList());
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return NotFound(ex.Message);
             }
         }
 
         //UPDATE
         [HttpPost]
-        public JsonResult UpdateCustomerDetails(TbCustomer tbCustomer)
+        public IActionResult UpdateCustomerDetails(TbCustomer tbCustomer)
         {
             try
             {
                 var contractor = customerService.UpdateCustomerDetails(tbCustomer);
                 if (contractor == true)
                 {
-                    return new JsonResult(new CrudStatus() { Status = true, Message = "Successfully Updated" });
+                    return Ok(new CrudStatus() { Status = true, Message = "Successfully Updated" });
                 }
-                return new JsonResult(new CrudStatus() { Status = false, Message = "Updation Failed" });
+                return Ok(new CrudStatus() { Status = false, Message = "Updation Failed" });
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
         //DELETE
         [HttpDelete]
-        public JsonResult DeleteCustomer(TbCustomer tbCustomer)
+        public IActionResult DeleteCustomer(TbCustomer tbCustomer)
         {
             try
             {
                 var customer = customerService.DeleteCustomer(tbCustomer);
                 if (customer == true)
                 {
-                    return new JsonResult(new CrudStatus() { Status = true, Message = "Deleted successfully!" });
+                    return Ok(new CrudStatus() { Status = true, Message = "Deleted successfully!" });
                 }
-                return new JsonResult(new CrudStatus() { Status = false });
+                return Ok(new CrudStatus() { Status = false });
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
         //SerachingContractor
         [HttpGet("Pincode")]
-        public JsonResult SearchBypincode(int pin)
+        public ActionResult SearchBypincode(int pin)
         {
             try
             {
-                return new JsonResult(customerService.SearchBypincode(pin).ToList());
+                return Ok(customerService.SearchBypincode(pin).ToList());
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return NotFound(ex.Message);
             }
         }
 
         //Sending Notification
         [HttpPost("SendingToContractor")]
-        public JsonResult SendNotification(long phonenumber, string registration, int id)
+        public IActionResult SendNotification(long phonenumber, string registration, int id)
         {
             try
             {
-                return new JsonResult(customerService.SendMessage(phonenumber, registration, id));
+                return Ok(customerService.SendMessage(phonenumber, registration, id));
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message);
+                return BadRequest(ex.Message);
             }
         }      
     }
