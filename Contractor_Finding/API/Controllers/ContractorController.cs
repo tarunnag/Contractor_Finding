@@ -48,11 +48,11 @@ namespace API.Controllers
         //[Authorize(Policy = "customer")]
         //RETRIVE
         [HttpGet]
-        public ActionResult<List<ContractorDisplay>> GetContractorDetails()
+        public ActionResult<List<ContractorDisplay>> GetContractorDetails([FromQuery] Pagination pageParams)
         {
             try
             {
-                return Ok(contractorService.GetContractorDetails().ToList());
+                return Ok(contractorService.GetContractorDetails(pageParams).ToList());
 
             }
             catch (Exception ex)

@@ -11,7 +11,7 @@ namespace Service.Interface
 {
     public interface IUserService
     {
-        public List<UserDisplay> GetUserDetails();
+        public List<UserDisplay> GetUserDetails(Pagination? pageParams = null);
         bool checkExistUser(TbUser tbUser);
         bool Register(Registration registration);
  

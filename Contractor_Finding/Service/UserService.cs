@@ -31,7 +31,7 @@ namespace Service
         }
 
         //For Display
-        public List<UserDisplay> GetUserDetails()
+        public List<UserDisplay> GetUserDetails(Pagination? pageParams=null)
         {
             List<UserDisplay> user = (from u in contractorFindingContext.TbUsers
                                       join ud in contractorFindingContext.UserTypes on
@@ -50,6 +50,48 @@ namespace Service
                                           Active = u.Active,
                                           TypeUser = u.TypeUser,
                                       }).ToList();
+            if (pageParams != null)
+            {
+
+                switch (pageParams.OrderBy)
+                {
+                    case "UserId":
+                        user = user.OrderBy(on => on.UserId).ToList();
+                        break;
+                    case "FirstName":
+                        user = user.OrderBy(on => on.FirstName).ToList();
+                        break;
+                    case "LastName":
+                        user = user.OrderBy(on => on.LastName).ToList();
+                        break;
+                    case "EmailId":
+                        user = user.OrderBy(on => on.EmailId).ToList();
+                        break;
+                    case "Password":
+                        user = user.OrderBy(on => on.Password).ToList();
+                        break;
+                    case "UserTypeName":
+                        user = user.OrderBy(on => on.UserTypeName).ToList();
+                        break;
+                    case "CreatedDate":
+                        user = user.OrderBy(on => on.CreatedDate).ToList();
+                        break;
+                    case "UpdatedDate":
+                        user = user.OrderBy(on => on.UpdatedDate).ToList();
+                        break;
+                    case "Active":
+                        user = user.OrderBy(on => on.Active).ToList();
+                        break;
+                    case "TypeUser":
+                        user = user.OrderBy(on => on.TypeUser).ToList();
+                        break;
+                    default:
+                        user = user.OrderBy(on => on.CreatedDate).ToList();
+                        break;
+                }
+                user = user.Skip((pageParams.PageNumber - 1) * pageParams.PageSize)
+                                                    .Take(pageParams.PageSize).ToList();
+            }
             return user;
         }
 
