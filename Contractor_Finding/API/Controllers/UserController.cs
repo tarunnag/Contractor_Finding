@@ -41,12 +41,12 @@ namespace API.Controllers
         // GET: api/<ContractorController>
         [HttpGet]
         [Authorize]
-        public ActionResult Getuserdetails()
+        public ActionResult Getuserdetails([FromQuery] Pagination pageParams)
         {
             loginID(Sessionkey);
             try
             {
-                return Ok (userService.GetUserDetails().ToList());
+                return Ok (userService.GetUserDetails(pageParams).ToList());
             }
             catch (Exception ex)
             {

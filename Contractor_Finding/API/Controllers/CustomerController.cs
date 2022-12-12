@@ -45,11 +45,11 @@ namespace API.Controllers
 
         //RETRIEVE
         [HttpGet]
-        public ActionResult GetCustomerDetails()
+        public ActionResult GetCustomerDetails([FromQuery] Pagination pageParams)
         {
             try
             {
-                return Ok(customerService.GetCustomerDetails().ToList());
+                return Ok(customerService.GetCustomerDetails(pageParams).ToList());
 
             }
             catch (Exception ex)
@@ -98,11 +98,11 @@ namespace API.Controllers
 
         //SerachingContractor
         [HttpGet("Pincode")]
-        public ActionResult SearchBypincode(int pin)
+        public ActionResult SearchBypincode(int pin, Pagination pageParams)
         {
             try
             {
-                return Ok(customerService.SearchBypincode(pin).ToList());
+                return Ok(customerService.SearchBypincode(pin, pageParams).ToList());
 
             }
             catch (Exception ex)

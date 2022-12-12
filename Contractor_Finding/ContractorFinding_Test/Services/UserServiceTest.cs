@@ -40,9 +40,10 @@ namespace ContractorFinding_Test.Services
         public void GetAll_User()
         {
             //Arrange
+            Pagination pageParams = new Pagination() { PageSize = 5, PageNumber = 1, OrderBy = "RegistrationNo" };
 
             //Act
-            var result = userService.GetUserDetails();
+            var result = userService.GetUserDetails(pageParams);
 
             //Assert
             var expect = _fixture.context.TbUsers.Count();
