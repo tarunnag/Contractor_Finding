@@ -34,6 +34,7 @@ namespace ContractorFinding_Test.Services
             //Assert
             Assert.Equal(expected, result);
         }
+
         [Fact]
         public void Test_AddContractorFailcondition()
         {
@@ -47,6 +48,7 @@ namespace ContractorFinding_Test.Services
             //Assert
             Assert.Equal(result, expected);
         }
+
         [Fact]
         public void Get_All_Contractor()
         {
@@ -69,73 +71,63 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = contractorService.updateContractorDetails(contractor);
-            var expect = true;
          
-
             //Assret
 
             Assert.NotNull(result);
         }
 
-        //[Fact]
-        //public void UpdateDetails_Test_With_WrongID()
-        //{
-        //    //Arrange
-        //    var contractor = new ContractorDetail() { ContractorId = 4, CompanyName = "ramtraders", Gender = 2, License = "KL-456789", Services = 1, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432, PhoneNumber = 9876543322 };
+        [Fact]
+        public void UpdateDetails_Test_With_WrongID()
+        {
+            //Arrange
+            var contractor = new ContractorDetail() { ContractorId = 4, CompanyName = "ramtraders", Gender = 2, License = "KL-456789", Services = 1, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432, PhoneNumber = 9876543322 };
 
-        //    //Act
-        //    var result = contractorService.updateContractorDetails(contractor);
-        //    var expected = false;
+            //Act
+            var result = contractorService.updateContractorDetails(contractor);
 
-        //    //Assert
-        //    Assert.Equal(result,expected);
-
-        //}
+            //Assert
+            Assert.Null(result.Result);
+        }
 
 
-        //[Fact]
-        //public void UpdateDetails_Test_With_WrongLicense()
-        //{
-        //    //Arrange
-        //    var contractor = new ContractorDetail() { ContractorId = 5, CompanyName = "ramtraders", Gender = 2, License = "KL-489", Services = 1, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432, PhoneNumber = 9876543322 };
+        [Fact]
+        public void UpdateDetails_Test_With_WrongLicense()
+        {
+            //Arrange
+            var contractor = new ContractorDetail() { ContractorId = 5, CompanyName = "ramtraders", Gender = 2, License = "KL-489", Services = 1, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432, PhoneNumber = 9876543322 };
 
-        //    //Act
-        //    var result = contractorService.updateContractorDetails(contractor);
-        //    var excepted = false;
-          
-        //    //Assert
-        //    Assert.Equal(result,excepted);
+            //Act
+            var result = contractorService.updateContractorDetails(contractor);
 
-        //}
+            //Assert
+            Assert.Null(result.Result);
+        }
 
-        //[Fact]
-        //public void UpdateDetails_Test_WithoutCompanyName()
-        //{
-        //    //Arrange
-        //    var contractor = new ContractorDetail() { ContractorId = 5, Gender = 2, License = "KL-456789", Services = 1, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432, PhoneNumber = 9876543322 };
+        [Fact]
+        public void UpdateDetails_Test_WithoutCompanyName()
+        {
+            //Arrange
+            var contractor = new ContractorDetail() { ContractorId = 5, Gender = 2, License = "KL-456789", Services = 1, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432, PhoneNumber = 9876543322 };
 
-        //    //Act
-        //    var result = contractorService.updateContractorDetails(contractor);
-        //    var excepted = false;
+            //Act
+            var result = contractorService.updateContractorDetails(contractor);
 
-        //    //Assert
-        //    Assert.Equal(result,excepted);
+            //Assert
+            Assert.Null(result.Result);
+        }
 
-        //}
+        [Fact]
+        public void UpdateDetails_Test_WithoutPincode()
+        {
+            //Arrange
+            var contractor = new ContractorDetail() { ContractorId = 3, CompanyName = "reddyconstruction", Gender = 1, License = "AP-23456789", Services = 1, Lattitude = 9.87, Longitude = 9.76, PhoneNumber = 1234567890 };
 
-        //[Fact]
-        //public void UpdateDetails_Test_WithoutPincode()
-        //{
-        //    //Arrange
-        //    var contractor = new ContractorDetail() { ContractorId = 3, CompanyName = "reddyconstruction", Gender = 1, License = "AP-23456789", Services = 1, Lattitude = 9.87, Longitude = 9.76, PhoneNumber = 1234567890 };
+            //Act
+            var result = contractorService.updateContractorDetails(contractor);
 
-        //    //Act
-        //    var result = contractorService.updateContractorDetails(contractor);
-        //    var excepted = false;
-
-        //    //Assert
-        //    Assert.Equal(result,excepted);
-
-        //}
+            //Assert
+            Assert.Null(result.Result);
+        }
     }
 }

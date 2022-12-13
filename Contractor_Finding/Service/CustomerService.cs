@@ -18,6 +18,7 @@ namespace Service
         private readonly SendMessage sms;
         private readonly ContractorService _contractorservice;
 
+        //Constructor
         public CustomerService(ContractorFindingContext contractorFindingContext)
         {
             this.contractorFindingContext = contractorFindingContext;

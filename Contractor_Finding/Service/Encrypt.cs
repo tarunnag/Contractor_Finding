@@ -9,7 +9,6 @@ namespace Service
 {
     public class Encrypt :IEncrypt
     {
-
         //for encrypt the password
         public string EncodePasswordToBase64(string password)
         {

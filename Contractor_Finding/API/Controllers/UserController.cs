@@ -33,11 +33,15 @@ namespace API.Controllers
             this.userService = userService;
             this.generateToken = generateToken;
             _mapper=mapper;
-
         }
 
         //for get user details
         // GET: api/<ContractorController>
+        /// <summary>
+        /// Get the details of the users 
+        /// </summary>
+        /// <param name="pageParams"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public ActionResult Getuserdetails([FromQuery] Pagination pageParams)
@@ -54,6 +58,10 @@ namespace API.Controllers
         }
 
         //For Versioning
+        /// <summary>
+        /// Get the details of the users with versioning 2
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [MapToApiVersion("2")]
         [Route("V2")]
@@ -63,6 +71,10 @@ namespace API.Controllers
             return Ok(users);
         }
 
+        /// <summary>
+        /// Get the details of the users with versioning 3
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [MapToApiVersion("3")]
         [Route("V3")]
@@ -74,6 +86,10 @@ namespace API.Controllers
             return new JsonResult(contractorFindingContext.TbUsers.ProjectTo<UserDisplayV2>(user).ToList());
         }
 
+        /// <summary>
+        /// Get the details of the users with versioning 4
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [MapToApiVersion("4")]
         [Route("V4")]
@@ -85,11 +101,15 @@ namespace API.Controllers
         }
 
         //for user registration
-        // POST api/<ContractorController>
+        /// <summary>
+        /// Adding the user to the database (table Tb_User)
+        /// here password will encrypt
+        /// </summary>
+        /// <param name="registration"></param>
+        /// <returns></returns>
         [HttpPut]
         public IActionResult RegisterUser(Registration registration)
         {
-
             try
             {
                     var details = userService.Register(registration);
@@ -107,6 +127,11 @@ namespace API.Controllers
         }
 
         ////for user login //
+        /// <summary>
+        /// Login using emailid and password, generate token
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [HttpPost("login")]
         public IActionResult LoginUser(TbUser login)
         {
@@ -126,7 +151,15 @@ namespace API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         //Refresh Token
+        /// <summary>
+        /// At the time of login , token is generated for users(Customer and Contractor)
+        /// this token have some span of time.
+        /// token will refresh.
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Refresh_Token")]
         public IActionResult RefreshToken(string accessToken)
@@ -136,33 +169,32 @@ namespace API.Controllers
                 return BadRequest("Invalid client request");
             }
 
-
-            //string? refreshToken = tokenModel.RefreshToken;
-
             var principal = generateToken.GetPrincipalFromExpiredToken(accessToken);
             if (principal == null)
             {
                 return BadRequest("Invalid access token or refresh token");
             }
+
             string? username = generateToken.ValidateJwtToken(accessToken);
             TbUser user = userService.GetUserDetails().Where(x => x.EmailId == username).FirstOrDefault();
-
             if (user == null)
             {
                 return BadRequest("Invalid access token or refresh token");
             }
 
             string? newAccessToken = generateToken.GenerateNewToken(user);
-
             if (newAccessToken == null)
                 return Unauthorized();
             else
                 return Ok(newAccessToken);
         }
 
-
-
         //for forgot password
+        /// <summary>
+        /// for changing password by using valid emailID,after password will encrypt
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [HttpPost("forgotpassword")]
         public IActionResult ForgotPassword(Registration login)
         {
@@ -181,7 +213,6 @@ namespace API.Controllers
             }
         }
         
-
         // for DELETE 
         [HttpDelete]
         public IActionResult Delete(TbUser user)
@@ -200,7 +231,5 @@ namespace API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-      
-
     }
 }

@@ -19,11 +19,15 @@ namespace Service
     {
         private readonly ContractorFindingContext contractorFindingContext;
         private readonly IConfiguration _config;
+
+        //Constructor
         public GenerateToken(ContractorFindingContext dbContext, IConfiguration configuration)
         {
             contractorFindingContext = dbContext;
             _config = configuration;
         }
+
+        //token Generation
         public string GenerateNewToken(TbUser user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
@@ -45,6 +49,8 @@ namespace Service
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        //getting expired token
         public ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
         {
             var tokenValidationParameters = new TokenValidationParameters
@@ -66,6 +72,8 @@ namespace Service
             return principal;
 
         }
+
+        //fot JWt token validation
         public string? ValidateJwtToken(string token)
         {
             if (token == null)
@@ -73,8 +81,6 @@ namespace Service
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_config["Jwt:Key"]);
-
-
             try
             {
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
@@ -102,8 +108,5 @@ namespace Service
                 return null;
             }
         }
-
-
     }
-
 }

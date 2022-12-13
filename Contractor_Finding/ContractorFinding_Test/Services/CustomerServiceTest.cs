@@ -35,6 +35,7 @@ namespace ContractorFinding_Test.Services
             //Assert
             Assert.Equal(expected, result);
         }
+
         [Fact]
         public void Test_AddCustomerDetailsFailcondition()
         {
@@ -54,6 +55,7 @@ namespace ContractorFinding_Test.Services
         {
             //Arrange
             Pagination pageParams = new Pagination() { PageSize=2, PageNumber=1,OrderBy= "RegistrationNo" };
+
             //Act
             var result = customerService.GetCustomerDetails(pageParams);
 
@@ -62,7 +64,6 @@ namespace ContractorFinding_Test.Services
             var items = Assert.IsType<List<CustomerDisplay>>(result);
             Assert.Equal(expect, items.Count);
         }
-
 
         [Fact]
         public void UpdateDetails_Test_WithCorrectData()
@@ -99,7 +100,6 @@ namespace ContractorFinding_Test.Services
             //Arrange
             var customer = new TbCustomer() { LandSqft = 0, RegistrationNo = "", BuildingType = 2, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432 };
 
-
             //Act
             var result = customerService.UpdateCustomerDetails(customer);
 
@@ -111,15 +111,13 @@ namespace ContractorFinding_Test.Services
         [Fact]
         public void DeleteCustomer_Test()
         {
+            //arrange
             var customer = new TbCustomer() { LandSqft = 123, RegistrationNo = "1232335", BuildingType = 2, Lattitude = 7.45, Longitude = 7.14, Pincode = 3454545 };
-
 
             //Act
             var result = customerService.DeleteCustomer(customer);
-
-         
+            
             //Assret
-
             Assert.True(result);
         }
     }
