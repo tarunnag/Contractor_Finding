@@ -143,7 +143,10 @@ namespace Service
         //search
         public List<ContractorDisplay> SearchBypincode(int pincode, Pagination pageParams)
         {
-            return _contractorservice.GetContractorDetails(pageParams).Where(x => x.Pincode == pincode).ToList();
+          
+            return  _contractorservice.GetContractorDetails(pageParams).Where(x => x.Pincode == pincode).ToList();
+            
+
         }
     }
 }
