@@ -125,7 +125,7 @@ namespace API.Controllers
         /// <param name="pageParams"></param>
         /// <returns></returns>
         [HttpGet("Pincode")]
-        public ActionResult SearchBypincode(int pin, Pagination pageParams)
+        public ActionResult SearchBypincode([FromQuery] Pagination pageParams, int pin)
         {
             try
             {
