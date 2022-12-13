@@ -116,9 +116,8 @@ namespace Service
         }
 
         //UPDATE
-        public bool updateContractorDetails(ContractorDetail contractorDetail)
+        public async Task<ContractorDetail> updateContractorDetails(ContractorDetail contractorDetail)
         {
-
             var contractorobj = contractorFindingContext.ContractorDetails.Where(c => c.ContractorId == contractorDetail.ContractorId).FirstOrDefault();
             var licenseobj = contractorFindingContext.ContractorDetails.Where(c => c.License == contractorDetail.License).FirstOrDefault();
             var licensecon = contractorobj.License;
@@ -133,12 +132,12 @@ namespace Service
                 contractorobj.Pincode = contractorDetail.Pincode;
                 if (contractorDetail.CompanyName != null && contractorDetail.Pincode != 0 && contractorDetail.ContractorId == contractorobj.ContractorId && contractorDetail.License == licensecon)
                 {
-                    contractorFindingContext.SaveChanges();
-                    return true;
+                    await contractorFindingContext.SaveChangesAsync();
+                    return contractorDetail;
                 }
-                return false;
+                return null;
             }
-            return false;
+            return null;
         }
 
         //DELETE

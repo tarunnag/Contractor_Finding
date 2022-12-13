@@ -64,23 +64,24 @@ namespace API.Controllers
        // [Authorize(Policy = "contractor")]
         //UPDATE
         [HttpPost]
-
-        public IActionResult UpdateContractor(ContractorDetail contractorDetail)
+        [Route("ContractorUpdate")]
+        public async Task<IActionResult>Post(ContractorDetail contractorDetail)
         {
             try
             {
                 var contractor = contractorService.updateContractorDetails(contractorDetail);
-                if (contractor == true && contractorDetail.License!=null)
+                if (contractor !=null && contractorDetail.License != null)
                 {
                     return Ok(new CrudStatus() { Status = true, Message = "Successfully Updated" });
                 }
                 return Ok(new CrudStatus() { Status = false, Message = "Updation Failed" });
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+      
 
         //[Authorize(Policy = "contractor")]
         //DELETE

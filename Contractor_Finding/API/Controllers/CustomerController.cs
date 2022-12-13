@@ -59,13 +59,19 @@ namespace API.Controllers
         }
 
         //UPDATE
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tbCustomer"></param>
+        /// <returns></returns>
         [HttpPost]
-        public IActionResult UpdateCustomerDetails(TbCustomer tbCustomer)
+        [Route("CustomerUpdate")]
+        public async Task<IActionResult> Post(TbCustomer tbCustomer)
         {
             try
             {
-                var contractor = customerService.UpdateCustomerDetails(tbCustomer);
-                if (contractor == true)
+                await customerService.UpdateCustomerDetails(tbCustomer);
+                if (tbCustomer != null)
                 {
                     return Ok(new CrudStatus() { Status = true, Message = "Successfully Updated" });
                 }
@@ -73,7 +79,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return new JsonResult(ex.Message);
             }
         }
 

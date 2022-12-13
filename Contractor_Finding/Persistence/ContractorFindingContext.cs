@@ -18,6 +18,10 @@ public partial class ContractorFindingContext : DbContext
 
     public virtual DbSet<ContractorDetail> ContractorDetails { get; set; }
 
+    public virtual DbSet<ContractorView> ContractorViews { get; set; }
+
+    public virtual DbSet<CustomerView> CustomerViews { get; set; }
+
     public virtual DbSet<ServiceProviding> ServiceProvidings { get; set; }
 
     public virtual DbSet<TbBuilding> TbBuildings { get; set; }
@@ -64,6 +68,43 @@ public partial class ContractorFindingContext : DbContext
             entity.HasOne(d => d.ServicesNavigation).WithMany(p => p.ContractorDetails)
                 .HasForeignKey(d => d.Services)
                 .HasConstraintName("FK__Contracto__Servi__02C769E9");
+        });
+
+        modelBuilder.Entity<ContractorView>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("ContractorView");
+
+            entity.Property(e => e.CompanyName)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.GenderType)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.License)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("license");
+            entity.Property(e => e.PhoneNumber).HasColumnName("phoneNumber");
+            entity.Property(e => e.ServiceName)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<CustomerView>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("CustomerView");
+
+            entity.Property(e => e.Building)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.LandSqft).HasColumnName("Land_sqft");
+            entity.Property(e => e.RegistrationNo)
+                .HasMaxLength(30)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<ServiceProviding>(entity =>

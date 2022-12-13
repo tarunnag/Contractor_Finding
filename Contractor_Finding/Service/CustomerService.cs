@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Persistence;
 using Twilio.TwiML.Voice;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
@@ -88,27 +89,25 @@ namespace Service
         }
 
         //UPDATE
-        public bool UpdateCustomerDetails(TbCustomer tbCustomer)
+        public async Task<TbCustomer> UpdateCustomerDetails(TbCustomer tbCustomer)
         {
+            var customer = contractorFindingContext.TbCustomers.Where(x => x.RegistrationNo == tbCustomer.RegistrationNo).FirstOrDefault();
+            if (customer != null)
             {
-                var customer = contractorFindingContext.TbCustomers.Where(x => x.RegistrationNo == tbCustomer.RegistrationNo).FirstOrDefault();
-                if (customer != null)
+                customer.LandSqft = tbCustomer.LandSqft;
+                customer.BuildingType = tbCustomer.BuildingType;
+                customer.Lattitude = tbCustomer.Lattitude;
+                customer.Longitude = tbCustomer.Longitude;
+                customer.Pincode = tbCustomer.Pincode;
+                customer.CustomerId = tbCustomer.CustomerId;
+                if (customer.LandSqft != null && customer.LandSqft != 0 && customer.RegistrationNo != null && customer.Pincode != null)
                 {
-                    customer.LandSqft = tbCustomer.LandSqft;
-                    customer.BuildingType = tbCustomer.BuildingType;
-                    customer.Lattitude = tbCustomer.Lattitude;
-                    customer.Longitude = tbCustomer.Longitude;
-                    customer.Pincode = tbCustomer.Pincode;
-                    customer.CustomerId= tbCustomer.CustomerId;
-                    if (customer.LandSqft != null&& customer.LandSqft!=0 && customer.RegistrationNo != null && customer.Pincode != null)
-                    {
-                        contractorFindingContext.SaveChanges();
-                        return true;
-                    }
-                    return false;
+                    await contractorFindingContext.SaveChangesAsync();
+                    return tbCustomer;
                 }
-                return false;
+                return null;
             }
+            return null;
         }
 
         //DELETE

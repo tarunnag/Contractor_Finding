@@ -76,7 +76,7 @@ namespace ContractorFinding_Test.Services
 
             //Assret
 
-            Assert.Equal(expected, result);
+            Assert.NotNull(result);
         }
 
         [Fact]
@@ -85,15 +85,14 @@ namespace ContractorFinding_Test.Services
             //Arrange
             var customer = new TbCustomer() { LandSqft = 0, RegistrationNo = "1232334", BuildingType = 2, Lattitude = 7.45, Longitude = 7.14, Pincode = 765432 };
 
-
             //Act
             var result = customerService.UpdateCustomerDetails(customer);
-            var expect = false;
 
             //Assert
-            Assert.Equal(result, expect);
+            Assert.Null(result.Result);
 
         }
+       
         [Fact]
         public void UpdateDetails_Test_With_WrongRegistrationNo()
         {
@@ -103,10 +102,9 @@ namespace ContractorFinding_Test.Services
 
             //Act
             var result = customerService.UpdateCustomerDetails(customer);
-            var expected = false;
 
             //Assert
-            Assert.Equal(result, expected);
+            Assert.Null(result.Result);
 
         }
 

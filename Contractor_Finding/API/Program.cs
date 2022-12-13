@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Persistence;
+using Repository;
 using Service;
 using Service.Interface;
 using Swashbuckle.AspNetCore.Filters;
@@ -75,6 +76,7 @@ builder.Services.AddSession(options =>
 });
 
 
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
 
 var app = builder.Build();
