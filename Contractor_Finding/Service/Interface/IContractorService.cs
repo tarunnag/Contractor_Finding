@@ -12,8 +12,7 @@ namespace Service.Interface
     {
         public bool CreateContractor(ContractorDetail contractorDetail);
         List<ContractorDisplay> GetContractorDetails(Pagination pageParams);
-        public bool updateContractorDetails(ContractorDetail contractorDetail);
-
+        Task<ContractorDetail> updateContractorDetails(ContractorDetail contractorDetail);
         public bool DeleteContractor(ContractorDetail contractorDetail);
 
     }

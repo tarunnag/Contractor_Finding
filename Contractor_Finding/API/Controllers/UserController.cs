@@ -36,7 +36,6 @@ namespace API.Controllers
 
         }
 
-
         //for get user details
         // GET: api/<ContractorController>
         [HttpGet]

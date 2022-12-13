@@ -12,7 +12,7 @@ namespace Service.Interface
     {
         bool CreateCustomer(TbCustomer tbCustomer);
         List<CustomerDisplay> GetCustomerDetails(Pagination pageParams);
-        bool UpdateCustomerDetails(TbCustomer tbCustomer);
+        Task<TbCustomer> UpdateCustomerDetails(TbCustomer tbCustomer);
 
         bool DeleteCustomer(TbCustomer tbCustomer);
         public List<ContractorDisplay> SearchBypincode(int pincode, Pagination pageParams);
