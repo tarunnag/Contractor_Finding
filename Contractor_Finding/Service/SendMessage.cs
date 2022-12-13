@@ -15,7 +15,7 @@ namespace Service
         public void SendMessageToContractor(string message1, long phonenumber)
         {
             var accountSid = "AC1ddfefa9ad316bf025cc4229c0362fee";
-            var authToken = "496d1676d5f133ecee5107508218f4a2";
+            var authToken = "44a395d161828d74f4f5d463041c5d1a";
             TwilioClient.Init(accountSid, authToken);
             string phone1 = Convert.ToString(phonenumber);
             string countryid = "+91";
@@ -25,7 +25,6 @@ namespace Service
             messageOptions.MessagingServiceSid = "MGd4d8963b65f2e7ac1eb40d55babdfcf0";
             messageOptions.Body = message1;
             var message = MessageResource.Create(messageOptions);
-
         }
     }
 }

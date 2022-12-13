@@ -10,6 +10,5 @@ namespace Repository
         {
             CreateMap<Userview, UserDisplayV2>();
         }
-
     }
 }

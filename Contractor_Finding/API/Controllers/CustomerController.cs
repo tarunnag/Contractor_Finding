@@ -25,6 +25,11 @@ namespace API.Controllers
         }
 
         //create
+        /// <summary>
+        /// Adding Customer details into database(table Tb_Customer)
+        /// </summary>
+        /// <param name="tbCustomer"></param>
+        /// <returns></returns>
         [HttpPut]
         public IActionResult CreateContractor(TbCustomer tbCustomer)
         {
@@ -44,6 +49,11 @@ namespace API.Controllers
         }
 
         //RETRIEVE
+        /// <summary>
+        /// get all details of the Customer
+        /// </summary>
+        /// <param name="pageParams"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult GetCustomerDetails([FromQuery] Pagination pageParams)
         {
@@ -60,7 +70,7 @@ namespace API.Controllers
 
         //UPDATE
         /// <summary>
-        /// 
+        /// updating the details of customer with registered RegistrationID,can't edit registrationID
         /// </summary>
         /// <param name="tbCustomer"></param>
         /// <returns></returns>
@@ -84,6 +94,11 @@ namespace API.Controllers
         }
 
         //DELETE
+        /// <summary>
+        /// Delete the details of customer by using RegistrationID
+        /// </summary>
+        /// <param name="tbCustomer"></param>
+        /// <returns></returns>
         [HttpDelete]
         public IActionResult DeleteCustomer(TbCustomer tbCustomer)
         {
@@ -103,6 +118,12 @@ namespace API.Controllers
         }
 
         //SerachingContractor
+        /// <summary>
+        /// Getting details of contractor by using Pincode which is already registered in Contractor details.
+        /// </summary>
+        /// <param name="pin"></param>
+        /// <param name="pageParams"></param>
+        /// <returns></returns>
         [HttpGet("Pincode")]
         public ActionResult SearchBypincode(int pin, Pagination pageParams)
         {
@@ -118,6 +139,13 @@ namespace API.Controllers
         }
 
         //Sending Notification
+        /// <summary>
+        /// sending the SMS as customer details using registered contractor phomnenumber,RegistrationID and CustomerID of customeR
+        /// </summary>
+        /// <param name="phonenumber"></param>
+        /// <param name="registration"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("SendingToContractor")]
         public IActionResult SendNotification(long phonenumber, string registration, int id)
         {

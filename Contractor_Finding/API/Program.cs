@@ -75,9 +75,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-
 
 var app = builder.Build();
 

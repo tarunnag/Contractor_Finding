@@ -14,9 +14,7 @@ namespace Service.Interface
         public List<UserDisplay> GetUserDetails(Pagination? pageParams = null);
         bool checkExistUser(TbUser tbUser);
         bool Register(Registration registration);
- 
-        Tuple<string,int> Login(TbUser login);
-       
+        Tuple<string,int> Login(TbUser login);      
         bool forgotpassword(Registration login);
         public bool DeleteUser(TbUser user);
         public List<Userview> GetUsers();

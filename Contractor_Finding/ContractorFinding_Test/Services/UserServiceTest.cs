@@ -13,10 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace ContractorFinding_Test.Services
 {
     [CollectionDefinition("Data Base")]
-    public class DataBasecollection : ICollectionFixture<DataFixture>
-    {
-
-    }
+    public class DataBasecollection : ICollectionFixture<DataFixture> { }
 
     [Collection("Data Base")]
     public class UserServiceTest
@@ -80,6 +77,7 @@ namespace ContractorFinding_Test.Services
             //Assert
             Assert.Equal(result, excepted);
         }
+
         [Fact]
         public void Test_Unregister()
         {
@@ -94,6 +92,7 @@ namespace ContractorFinding_Test.Services
             //Assert
             Assert.Equal(result, excepted);
         }
+
         [Fact]
         public void Test_Register_with_Wrong_Confirmpass()
         {
@@ -170,6 +169,7 @@ namespace ContractorFinding_Test.Services
             //Assert
             Assert.Equal(expected, expected);
         }
+
         [Fact]
         public void Forget_passwrod_Test_wrong_confirmpass() {
             var user = new Registration() { EmailId = "shirin@gmail.com", Password = "shirin123", confirmationPassword = "shiin123" };

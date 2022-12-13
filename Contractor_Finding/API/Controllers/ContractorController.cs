@@ -26,8 +26,12 @@ namespace API.Controllers
 
         //[Authorize(Policy = "contractor")]
         //create
-        [HttpPut]
-        
+        /// <summary>
+        /// Adding the details of contractor into database (table Contractor_Details)
+        /// </summary>
+        /// <param name="contractorDetail"></param>
+        /// <returns></returns>
+        [HttpPut]      
         public IActionResult CreateContractor(ContractorDetail contractorDetail)
         {
             try
@@ -47,6 +51,11 @@ namespace API.Controllers
 
         //[Authorize(Policy = "customer")]
         //RETRIVE
+        /// <summary>
+        /// get the All the contractor details
+        /// </summary>
+        /// <param name="pageParams"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult<List<ContractorDisplay>> GetContractorDetails([FromQuery] Pagination pageParams)
         {
@@ -61,8 +70,13 @@ namespace API.Controllers
             }
         }
 
-       // [Authorize(Policy = "contractor")]
+        // [Authorize(Policy = "contractor")]
         //UPDATE
+        /// <summary>
+        /// update the contractor details with using Registered License
+        /// </summary>
+        /// <param name="contractorDetail"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("ContractorUpdate")]
         public async Task<IActionResult>Post(ContractorDetail contractorDetail)
@@ -82,9 +96,13 @@ namespace API.Controllers
             }
         }
       
-
         //[Authorize(Policy = "contractor")]
         //DELETE
+        /// <summary>
+        /// Delete the contractor details using Registered License
+        /// </summary>
+        /// <param name="contractorDetail"></param>
+        /// <returns></returns>
         [HttpDelete]
         public IActionResult DeleteContractor(ContractorDetail contractorDetail)
         {

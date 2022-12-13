@@ -19,9 +19,10 @@ namespace Service
     public class UserService : IUserService
     {
         private readonly ContractorFindingContext contractorFindingContext;
-        private readonly IEncrypt encrypt;
-      
+        private readonly IEncrypt encrypt;    
         private readonly IGenerateToken generateToken;
+
+        //Constractor
         public UserService(ContractorFindingContext contractorFindingContext, IEncrypt encrypt, IGenerateToken generateToken)
         {
             this.contractorFindingContext = contractorFindingContext;
@@ -52,7 +53,6 @@ namespace Service
                                       }).ToList();
             if (pageParams != null)
             {
-
                 switch (pageParams.OrderBy)
                 {
                     case "UserId":
@@ -95,18 +95,12 @@ namespace Service
             return user;
         }
 
+        //checking existUser
         public bool checkExistUser(TbUser tbUser)
         {
             var email = contractorFindingContext.TbUsers.Where(e => e.EmailId == tbUser.EmailId).FirstOrDefault();
             return email == null;
-
-            //if (email == null)
-            //{
-            //    return true;
-            //}
-            //return false;
         }
-
 
         //for Registration
         public bool Register(Registration registration)
@@ -131,9 +125,7 @@ namespace Service
             }
             return false;
         }
-      
-
-      
+            
         ////for Login
         public Tuple<string,int> Login(TbUser login)
         {
@@ -151,8 +143,6 @@ namespace Service
             }
             return null!;
         }
-
-     
 
         //for forgotpassword case
         public bool forgotpassword(Registration login)
@@ -173,8 +163,7 @@ namespace Service
                 }
                 return false;
             }
-            return false;
-            
+            return false;            
         }
 
         //for delete deatils
